@@ -9,9 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-
-    Auth *authform = new Auth;
-    authform->show();
+    //this->show();
+    //Auth *authform = new Auth;
+    //authform->show();
 }
 
 MainWindow::~MainWindow()
@@ -55,5 +55,11 @@ void MainWindow::on_lineEdit_returnPressed()
 void MainWindow::on_pushButton_send_clicked()
 {
     SendToServer(ui->lineEdit->text());
+}
+
+
+void MainWindow::on_lineEdit_search_returnPressed()
+{
+
 }
 

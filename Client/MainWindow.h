@@ -32,5 +32,6 @@ private slots:
     void on_pushButton_connect_clicked();
     void on_lineEdit_returnPressed();
     void on_pushButton_send_clicked();
+    void on_lineEdit_search_returnPressed();
 };
 #endif // MAINWINDOW_H
