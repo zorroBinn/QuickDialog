@@ -26,7 +26,7 @@ void MainWindow::SendToServer(QString str)
     out.setVersion(QDataStream::Qt_6_2);
     out << str;
     socket->write(Data);
-    ui->lineEdit->clear();
+    ui->lineEdit_mess->clear();
 }
 
 void MainWindow::slotReadyRead()
@@ -36,7 +36,7 @@ void MainWindow::slotReadyRead()
     if(in.status() == QDataStream::Ok) {
         QString str;
         in >> str;
-        ui->textBrowser->append(str);
+        ui->textBrowser_current_chat->append(str);
     }
 }
 
@@ -46,20 +46,20 @@ void MainWindow::on_pushButton_connect_clicked()
 }
 
 
-void MainWindow::on_lineEdit_returnPressed()
-{
-    SendToServer(ui->lineEdit->text());
-}
-
-
 void MainWindow::on_pushButton_send_clicked()
 {
-    SendToServer(ui->lineEdit->text());
+    SendToServer(ui->lineEdit_mess->text());
 }
 
 
 void MainWindow::on_lineEdit_search_returnPressed()
 {
 
+}
+
+
+void MainWindow::on_lineEdit_mess_returnPressed()
+{
+    if(ui->lineEdit_mess->text() != "") SendToServer(ui->lineEdit_mess->text());
 }
 
