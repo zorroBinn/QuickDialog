@@ -56,7 +56,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вход в аккаунт&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вход в аккаунт с введёнными учётными данными&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));
@@ -81,7 +81,7 @@ font: 14pt &quot;Comic Sans MS&quot;;</string>
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Регистрация нового аккаунта&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Регистрация нового аккаунта по введённым учётным данным&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));
@@ -111,7 +111,7 @@ color: rgb(239, 255, 246);</string>
      <string>Авторизация</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -132,8 +132,12 @@ color: rgb(239, 255, 246);</string>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(66, 11, 120);
-color: rgb(255, 255, 255);</string>
+        <string notr="true">background-color: rgb(46, 0, 83);
+color: rgb(255, 255, 255);
+border: 2px solid rgb(212, 255, 254);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;</string>
        </property>
        <property name="maxLength">
         <number>50</number>
@@ -167,11 +171,18 @@ color: rgb(255, 255, 255);</string>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(66, 11, 120);
-color: rgb(255, 255, 255);</string>
+        <string notr="true">background-color: rgb(46, 0, 83);
+color: rgb(255, 255, 255);
+border: 2px solid rgb(212, 255, 254);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;</string>
        </property>
        <property name="maxLength">
         <number>50</number>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
        </property>
        <property name="placeholderText">
         <string>Пароль</string>

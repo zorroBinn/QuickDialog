@@ -12,3 +12,15 @@ Auth::~Auth()
 {
     delete ui;
 }
+
+void Auth::on_lineEdit_password_returnPressed()
+{
+
+}
+
+
+void Auth::on_lineEdit_username_returnPressed()
+{
+
+}
+

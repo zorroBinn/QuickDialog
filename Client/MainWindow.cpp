@@ -9,9 +9,11 @@ MainWindow::MainWindow(QWidget *parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-    //this->show();
-    //Auth *authform = new Auth;
-    //authform->show();
+    Auth *authform = new Auth;
+    authform->show();
+
+    this->show();
+
 }
 
 MainWindow::~MainWindow()
@@ -41,8 +43,8 @@ void MainWindow::slotReadyRead()
 }
 
 void MainWindow::on_pushButton_connect_clicked()
-{    socket->connectToHost("192.168.1.103", 2323);
-    ui->pushButton_connect->setVisible(false);
+{
+    socket->connectToHost("192.168.1.102", 2323);
 }
 
 
@@ -61,5 +63,11 @@ void MainWindow::on_lineEdit_search_returnPressed()
 void MainWindow::on_lineEdit_mess_returnPressed()
 {
     if(ui->lineEdit_mess->text() != "") SendToServer(ui->lineEdit_mess->text());
+}
+
+
+void MainWindow::on_MainWindow_destroyed()
+{
+
 }
 

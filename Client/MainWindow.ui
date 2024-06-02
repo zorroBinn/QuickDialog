@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>902</width>
-    <height>676</height>
+    <width>923</width>
+    <height>683</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -49,83 +49,41 @@
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(0, 0, 71);
+           <string notr="true">background-color: rgb(0, 0, 65);
 color: rgb(238, 255, 246);
-font: 700 24pt &quot;Comic Sans MS&quot;;</string>
+font: 700 24pt &quot;Comic Sans MS&quot;;
+border: 2px solid rgb(167, 151, 255);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;</string>
           </property>
           <property name="maxLength">
            <number>100</number>
           </property>
+          <property name="placeholderText">
+           <string>Поиск по имени</string>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QScrollArea" name="scrollArea_chats">
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
+         <widget class="QListView" name="listView_chats">
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAsNeeded</enum>
           </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_2">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>298</width>
-             <height>596</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <spacer name="verticalSpacer">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>575</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
          </widget>
         </item>
        </layout>
       </item>
       <item row="0" column="1">
        <widget class="QGroupBox" name="groupBox_main">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgba(255, 255, 255, 0);
+border: 0px</string>
+        </property>
         <property name="title">
          <string/>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="0" colspan="3">
-          <widget class="QTextBrowser" name="textBrowser_current_chat">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(0, 0, 72);
-color: rgb(239, 253, 255);
-font: 700 18pt &quot;Comic Sans MS&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_connect">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(255, 255, 255);</string>
-           </property>
-           <property name="text">
-            <string>Connect</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0" colspan="2">
           <widget class="QLineEdit" name="lineEdit_mess">
            <property name="minimumSize">
@@ -141,9 +99,17 @@ font: 700 18pt &quot;Comic Sans MS&quot;;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgb(0, 0, 61);
+            <string notr="true">background-color: rgb(0, 0, 65);
 font: 700 24pt &quot;Comic Sans MS&quot;;
-color: rgb(242, 255, 244);</string>
+color: rgb(242, 255, 244);
+border: 2px solid rgb(0, 0, 255);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+</string>
+           </property>
+           <property name="placeholderText">
+            <string>Введите своё сообщение</string>
            </property>
           </widget>
          </item>
@@ -167,10 +133,31 @@ color: rgb(242, 255, 244);</string>
            <property name="styleSheet">
             <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.488636 rgba(80, 0, 122, 255), stop:0.806818 rgba(44, 18, 97, 255));
 font: 700 40pt &quot;Times New Roman&quot;;
-color: rgb(238, 250, 255);</string>
+color: rgb(198, 255, 255);
+border: 2px solid rgb(0, 255, 255);</string>
            </property>
            <property name="text">
             <string>&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_connect">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(255, 255, 255);</string>
+           </property>
+           <property name="text">
+            <string>Connect</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="QTextBrowser" name="textBrowser_current_chat">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(0, 0, 60);
+color: rgb(239, 253, 255);
+font: 700 18pt &quot;Comic Sans MS&quot;;
+border: 0px</string>
            </property>
           </widget>
          </item>

@@ -15,6 +15,11 @@ public:
     explicit Auth(QWidget *parent = nullptr);
     ~Auth();
 
+private slots:
+    void on_lineEdit_password_returnPressed();
+
+    void on_lineEdit_username_returnPressed();
+
 private:
     Ui::Auth *ui;
 };

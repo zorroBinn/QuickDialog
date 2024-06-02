@@ -33,5 +33,6 @@ private slots:
     void on_pushButton_send_clicked();
     void on_lineEdit_search_returnPressed();
     void on_lineEdit_mess_returnPressed();
+    void on_MainWindow_destroyed();
 };
 #endif // MAINWINDOW_H
