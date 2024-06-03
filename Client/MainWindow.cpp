@@ -44,7 +44,7 @@ void MainWindow::slotReadyRead()
 
 void MainWindow::on_pushButton_connect_clicked()
 {
-    socket->connectToHost("192.168.1.102", 2323);
+    socket->connectToHost("192.168.1.103", 2024);
 }
 
 

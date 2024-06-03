@@ -289,6 +289,7 @@ Makefile: Server.pro C:/Qt/6.7.1/mingw_64/mkspecs/win32-g++/qmake.conf C:/Qt/6.7
 		C:/Qt/6.7.1/mingw_64/mkspecs/features/lex.prf \
 		Server.pro \
 		C:/Qt/6.7.1/mingw_64/lib/Qt6Network.prl \
+		C:/Qt/6.7.1/mingw_64/lib/Qt6Sql.prl \
 		C:/Qt/6.7.1/mingw_64/lib/Qt6Core.prl \
 		C:/Qt/6.7.1/mingw_64/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile Server.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
@@ -511,6 +512,7 @@ C:/Qt/6.7.1/mingw_64/mkspecs/features/yacc.prf:
 C:/Qt/6.7.1/mingw_64/mkspecs/features/lex.prf:
 Server.pro:
 C:/Qt/6.7.1/mingw_64/lib/Qt6Network.prl:
+C:/Qt/6.7.1/mingw_64/lib/Qt6Sql.prl:
 C:/Qt/6.7.1/mingw_64/lib/Qt6Core.prl:
 C:/Qt/6.7.1/mingw_64/mkspecs/features/build_pass.prf:
 qmake: FORCE

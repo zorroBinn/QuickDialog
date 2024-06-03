@@ -1,5 +1,5 @@
 QT -= gui
-QT += core network
+QT += core network sql
 
 CONFIG += c++17 cmdline
 
@@ -17,4 +17,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Server.h
+    Server.h \
+    SignalType.h
