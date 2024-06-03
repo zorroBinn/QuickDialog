@@ -29,7 +29,7 @@
    <iconset theme="contact-new"/>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(24, 0, 36, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));</string>
   </property>
   <widget class="QWidget" name="widget_down" native="true">
    <property name="geometry">
@@ -41,9 +41,9 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(68, 0, 104, 255), stop:1 rgba(59, 47, 172, 255));</string>
+    <string notr="true"/>
    </property>
-   <widget class="QPushButton" name="pushButton_auth">
+   <widget class="QPushButton" name="pushButton_Auth">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -60,7 +60,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));
-border: none;
+border: 1px solid rgb(0, 0, 127);
 color: rgb(237, 253, 255);
 font: 14pt &quot;Comic Sans MS&quot;;</string>
     </property>
@@ -68,7 +68,7 @@ font: 14pt &quot;Comic Sans MS&quot;;</string>
      <string>Вход</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_registr">
+   <widget class="QPushButton" name="pushButton_Registr">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -85,7 +85,7 @@ font: 14pt &quot;Comic Sans MS&quot;;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));
-border: none;
+border: 1px solid rgb(0, 0, 127);
 color: rgb(237, 253, 255);
 font: 14pt &quot;Comic Sans MS&quot;;</string>
     </property>
@@ -93,7 +93,7 @@ font: 14pt &quot;Comic Sans MS&quot;;</string>
      <string>Регистрация</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_auth">
+   <widget class="QLabel" name="label_Auth">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -122,7 +122,7 @@ color: rgb(239, 255, 246);</string>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLineEdit" name="lineEdit_username">
+      <widget class="QLineEdit" name="lineEdit_Username">
        <property name="font">
         <font>
          <family>Comic Sans MS</family>
@@ -161,7 +161,7 @@ border-right: 0px;</string>
       </spacer>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_password">
+      <widget class="QLineEdit" name="lineEdit_Password">
        <property name="font">
         <font>
          <family>Comic Sans MS</family>

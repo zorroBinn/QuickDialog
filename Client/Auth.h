@@ -16,9 +16,9 @@ public:
     ~Auth();
 
 private slots:
-    void on_lineEdit_password_returnPressed();
+    void on_lineEdit_Password_returnPressed();
 
-    void on_lineEdit_username_returnPressed();
+    void on_lineEdit_Username_returnPressed();
 
 private:
     Ui::Auth *ui;

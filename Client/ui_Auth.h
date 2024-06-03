@@ -25,14 +25,14 @@ class Ui_Auth
 {
 public:
     QWidget *widget_down;
-    QPushButton *pushButton_auth;
-    QPushButton *pushButton_registr;
-    QLabel *label_auth;
+    QPushButton *pushButton_Auth;
+    QPushButton *pushButton_Registr;
+    QLabel *label_Auth;
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
-    QLineEdit *lineEdit_username;
+    QLineEdit *lineEdit_Username;
     QSpacerItem *verticalSpacer;
-    QLineEdit *lineEdit_password;
+    QLineEdit *lineEdit_Password;
 
     void setupUi(QWidget *Auth)
     {
@@ -43,31 +43,31 @@ public:
         Auth->setMaximumSize(QSize(600, 450));
         QIcon icon(QIcon::fromTheme(QString::fromUtf8("contact-new")));
         Auth->setWindowIcon(icon);
-        Auth->setStyleSheet(QString::fromUtf8(""));
+        Auth->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(24, 0, 36, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));"));
         widget_down = new QWidget(Auth);
         widget_down->setObjectName("widget_down");
         widget_down->setGeometry(QRect(0, 0, 601, 471));
-        widget_down->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(68, 0, 104, 255), stop:1 rgba(59, 47, 172, 255));"));
-        pushButton_auth = new QPushButton(widget_down);
-        pushButton_auth->setObjectName("pushButton_auth");
-        pushButton_auth->setGeometry(QRect(100, 320, 131, 41));
-        pushButton_auth->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_auth->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
-"border: none;\n"
+        widget_down->setStyleSheet(QString::fromUtf8(""));
+        pushButton_Auth = new QPushButton(widget_down);
+        pushButton_Auth->setObjectName("pushButton_Auth");
+        pushButton_Auth->setGeometry(QRect(100, 320, 131, 41));
+        pushButton_Auth->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_Auth->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
+"border: 1px solid rgb(0, 0, 127);\n"
 "color: rgb(237, 253, 255);\n"
 "font: 14pt \"Comic Sans MS\";"));
-        pushButton_registr = new QPushButton(widget_down);
-        pushButton_registr->setObjectName("pushButton_registr");
-        pushButton_registr->setGeometry(QRect(380, 320, 131, 41));
-        pushButton_registr->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_registr->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
-"border: none;\n"
+        pushButton_Registr = new QPushButton(widget_down);
+        pushButton_Registr->setObjectName("pushButton_Registr");
+        pushButton_Registr->setGeometry(QRect(380, 320, 131, 41));
+        pushButton_Registr->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_Registr->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
+"border: 1px solid rgb(0, 0, 127);\n"
 "color: rgb(237, 253, 255);\n"
 "font: 14pt \"Comic Sans MS\";"));
-        label_auth = new QLabel(widget_down);
-        label_auth->setObjectName("label_auth");
-        label_auth->setGeometry(QRect(130, 30, 347, 78));
-        label_auth->setStyleSheet(QString::fromUtf8("font: italic 42pt \"Comic Sans MS\";\n"
+        label_Auth = new QLabel(widget_down);
+        label_Auth->setObjectName("label_Auth");
+        label_Auth->setGeometry(QRect(130, 30, 347, 78));
+        label_Auth->setStyleSheet(QString::fromUtf8("font: italic 42pt \"Comic Sans MS\";\n"
 "background-color: rgba(255, 255, 255, 0);\n"
 "color: rgb(239, 255, 246);"));
         layoutWidget = new QWidget(widget_down);
@@ -76,41 +76,41 @@ public:
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit_username = new QLineEdit(layoutWidget);
-        lineEdit_username->setObjectName("lineEdit_username");
+        lineEdit_Username = new QLineEdit(layoutWidget);
+        lineEdit_Username->setObjectName("lineEdit_Username");
         QFont font;
         font.setFamilies({QString::fromUtf8("Comic Sans MS")});
         font.setPointSize(20);
         font.setBold(true);
         font.setItalic(true);
-        lineEdit_username->setFont(font);
-        lineEdit_username->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 0, 83);\n"
+        lineEdit_Username->setFont(font);
+        lineEdit_Username->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 0, 83);\n"
 "color: rgb(255, 255, 255);\n"
 "border: 2px solid rgb(212, 255, 254);\n"
 "border-top: 0px;\n"
 "border-left: 0px;\n"
 "border-right: 0px;"));
-        lineEdit_username->setMaxLength(50);
+        lineEdit_Username->setMaxLength(50);
 
-        verticalLayout->addWidget(lineEdit_username);
+        verticalLayout->addWidget(lineEdit_Username);
 
         verticalSpacer = new QSpacerItem(20, 13, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
 
-        lineEdit_password = new QLineEdit(layoutWidget);
-        lineEdit_password->setObjectName("lineEdit_password");
-        lineEdit_password->setFont(font);
-        lineEdit_password->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 0, 83);\n"
+        lineEdit_Password = new QLineEdit(layoutWidget);
+        lineEdit_Password->setObjectName("lineEdit_Password");
+        lineEdit_Password->setFont(font);
+        lineEdit_Password->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 0, 83);\n"
 "color: rgb(255, 255, 255);\n"
 "border: 2px solid rgb(212, 255, 254);\n"
 "border-top: 0px;\n"
 "border-left: 0px;\n"
 "border-right: 0px;"));
-        lineEdit_password->setMaxLength(50);
-        lineEdit_password->setEchoMode(QLineEdit::Password);
+        lineEdit_Password->setMaxLength(50);
+        lineEdit_Password->setEchoMode(QLineEdit::Password);
 
-        verticalLayout->addWidget(lineEdit_password);
+        verticalLayout->addWidget(lineEdit_Password);
 
 
         retranslateUi(Auth);
@@ -122,16 +122,16 @@ public:
     {
         Auth->setWindowTitle(QCoreApplication::translate("Auth", "QuickDialog", nullptr));
 #if QT_CONFIG(tooltip)
-        pushButton_auth->setToolTip(QCoreApplication::translate("Auth", "<html><head/><body><p>\320\222\321\205\320\276\320\264 \320\262 \320\260\320\272\320\272\320\260\321\203\320\275\321\202 \321\201 \320\262\320\262\320\265\320\264\321\221\320\275\320\275\321\213\320\274\320\270 \321\203\321\207\321\221\321\202\320\275\321\213\320\274\320\270 \320\264\320\260\320\275\320\275\321\213\320\274\320\270</p></body></html>", nullptr));
+        pushButton_Auth->setToolTip(QCoreApplication::translate("Auth", "<html><head/><body><p>\320\222\321\205\320\276\320\264 \320\262 \320\260\320\272\320\272\320\260\321\203\320\275\321\202 \321\201 \320\262\320\262\320\265\320\264\321\221\320\275\320\275\321\213\320\274\320\270 \321\203\321\207\321\221\321\202\320\275\321\213\320\274\320\270 \320\264\320\260\320\275\320\275\321\213\320\274\320\270</p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
-        pushButton_auth->setText(QCoreApplication::translate("Auth", "\320\222\321\205\320\276\320\264", nullptr));
+        pushButton_Auth->setText(QCoreApplication::translate("Auth", "\320\222\321\205\320\276\320\264", nullptr));
 #if QT_CONFIG(tooltip)
-        pushButton_registr->setToolTip(QCoreApplication::translate("Auth", "<html><head/><body><p>\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217 \320\275\320\276\320\262\320\276\320\263\320\276 \320\260\320\272\320\272\320\260\321\203\320\275\321\202\320\260 \320\277\320\276 \320\262\320\262\320\265\320\264\321\221\320\275\320\275\321\213\320\274 \321\203\321\207\321\221\321\202\320\275\321\213\320\274 \320\264\320\260\320\275\320\275\321\213\320\274</p></body></html>", nullptr));
+        pushButton_Registr->setToolTip(QCoreApplication::translate("Auth", "<html><head/><body><p>\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217 \320\275\320\276\320\262\320\276\320\263\320\276 \320\260\320\272\320\272\320\260\321\203\320\275\321\202\320\260 \320\277\320\276 \320\262\320\262\320\265\320\264\321\221\320\275\320\275\321\213\320\274 \321\203\321\207\321\221\321\202\320\275\321\213\320\274 \320\264\320\260\320\275\320\275\321\213\320\274</p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
-        pushButton_registr->setText(QCoreApplication::translate("Auth", "\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217", nullptr));
-        label_auth->setText(QCoreApplication::translate("Auth", "\320\220\320\262\321\202\320\276\321\200\320\270\320\267\320\260\321\206\320\270\321\217", nullptr));
-        lineEdit_username->setPlaceholderText(QCoreApplication::translate("Auth", "\320\230\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
-        lineEdit_password->setPlaceholderText(QCoreApplication::translate("Auth", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr));
+        pushButton_Registr->setText(QCoreApplication::translate("Auth", "\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217", nullptr));
+        label_Auth->setText(QCoreApplication::translate("Auth", "\320\220\320\262\321\202\320\276\321\200\320\270\320\267\320\260\321\206\320\270\321\217", nullptr));
+        lineEdit_Username->setPlaceholderText(QCoreApplication::translate("Auth", "\320\230\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
+        lineEdit_Password->setPlaceholderText(QCoreApplication::translate("Auth", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr));
     } // retranslateUi
 
 };

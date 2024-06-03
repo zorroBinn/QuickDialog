@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 #include "Auth.h"
+#include "AddUserToChat.h"
+#include "NewChat.h"
+#include "ClientSignalType.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,9 +33,11 @@ public slots:
     void slotReadyRead();
 private slots:
     void on_pushButton_connect_clicked();
-    void on_pushButton_send_clicked();
-    void on_lineEdit_search_returnPressed();
-    void on_lineEdit_mess_returnPressed();
+    void on_pushButton_Send_clicked();
+    void on_lineEdit_Search_returnPressed();
+    void on_lineEdit_Mess_returnPressed();
     void on_MainWindow_destroyed();
+    void on_pushButton_Chat_NewUser_clicked();
+    void on_pushButton_NewChat_clicked();
 };
 #endif // MAINWINDOW_H

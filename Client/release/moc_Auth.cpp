@@ -36,9 +36,9 @@ namespace {
 struct qt_meta_stringdata_CLASSAuthENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSAuthENDCLASS = QtMocHelpers::stringData(
     "Auth",
-    "on_lineEdit_password_returnPressed",
+    "on_lineEdit_Password_returnPressed",
     "",
-    "on_lineEdit_username_returnPressed"
+    "on_lineEdit_Username_returnPressed"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -78,9 +78,9 @@ Q_CONSTINIT const QMetaObject Auth::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSAuthENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<Auth, std::true_type>,
-        // method 'on_lineEdit_password_returnPressed'
+        // method 'on_lineEdit_Password_returnPressed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_lineEdit_username_returnPressed'
+        // method 'on_lineEdit_Username_returnPressed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -92,8 +92,8 @@ void Auth::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         auto *_t = static_cast<Auth *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->on_lineEdit_password_returnPressed(); break;
-        case 1: _t->on_lineEdit_username_returnPressed(); break;
+        case 0: _t->on_lineEdit_Password_returnPressed(); break;
+        case 1: _t->on_lineEdit_Username_returnPressed(); break;
         default: ;
         }
     }

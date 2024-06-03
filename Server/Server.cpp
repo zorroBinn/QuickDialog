@@ -50,6 +50,7 @@ Server::~Server()
         socket->deleteLater();
     }
 }
+
 void Server::incomingConnection(qintptr socketDescriptor)
 {
     socket = new QTcpSocket;
@@ -79,10 +80,30 @@ void Server::slotReadyRead()
     in.setVersion(QDataStream::Qt_6_2);
     if(in.status() == QDataStream::Ok)
     {
-        QString str;
-        in >> str;
-        qDebug() << str;
-        SendToClient(str);
+        SignalType type;
+        in >> type;
+        switch (type)
+        {
+        case SignalType::UserMessage:
+        {
+            QString str;
+            in >> str;
+            qDebug() << "User " << socketDescriptor() << " sent the message " << str;
+            SendToClient(str);
+            break;
+        }
+        case SignalType::AuthData:
+        {
+            QString username, password;
+            in >> username;
+            in >> password;
+
+            break;
+        }
+        }
+
+
+
     }
     else
     {
