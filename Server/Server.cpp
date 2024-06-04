@@ -24,8 +24,7 @@ Server::Server()
     DatabaseQuery.exec("CREATE TABLE IF NOT EXISTS Users ("
                        "Id_User INTEGER PRIMARY KEY AUTOINCREMENT, "
                        "Username TEXT NOT NULL UNIQUE, "
-                       "User_Password TEXT NOT NULL, "
-                       "Is_Online BOOL NOT NULL)");
+                       "User_Password TEXT NOT NULL)");
     //Создание таблицы чатов
     DatabaseQuery.exec("CREATE TABLE IF NOT EXISTS Chats ("
                        "Id_Chats INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -44,11 +43,14 @@ Server::Server()
 Server::~Server()
 {
     //Закрытие всех сокетов при остановке сервера
-    foreach (QTcpSocket* socket, Sockets)
+    foreach (QTcpSocket* socket, Clients.keys())
     {
         socket->close();
         socket->deleteLater();
     }
+    //Разрыв коннекта с БД
+    QSqlDatabase::database().close();
+    QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
@@ -57,20 +59,78 @@ void Server::incomingConnection(qintptr socketDescriptor)
     socket->setSocketDescriptor(socketDescriptor);
     connect(socket,&QTcpSocket::readyRead, this, &Server::slotReadyRead);
     connect(socket,&QTcpSocket::disconnected, this, &Server::disablingTheClient);
-    Sockets.push_back(socket);
-    qDebug() << "Client connected";
+    //Sockets.push_back(socket);
+    ClientData clientdata;
+    clientdata.Id_User = -1;
+    Clients.insert(socket, clientdata);
+    qDebug() << "Client connected, socket descriptor: " << socketDescriptor;
 }
 
-void Server::SendToClient(QString str)
+//Обработка аутентификации пользователя
+void Server::AuthUser(QString username, QString password)
 {
-    Data.clear();
-    QDataStream out(&Data, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_6_2);
-    out << str;
-    for(unsigned short i = 0; i < Sockets.size(); i++)
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Users WHERE Username = :username AND User_Password = :password"); //Поиск пользователя с указанным username и password
+    query.bindValue(":username", username);
+    query.bindValue(":password", password);
+    query.exec();
+    if(query.next())
     {
-        Sockets[i]->write(Data);
+        //Получаем такого пользователя и в мапе сокет-id указываем id
+        int Id_User = query.value("Id_User").toInt();
+        if (Clients.contains(socket))
+        {
+            ClientData &clientdata = Clients[socket];
+            clientdata.Id_User = Id_User;
+        }
+        Data.clear();
+        QDataStream out(&Data, QIODevice::WriteOnly);
+        out.setVersion(QDataStream::Qt_6_2);
+        out << SignalType::AuthDone << username;
+        socket->write(Data);
+
+        qDebug() << "Auth " << username << " done";
     }
+    else
+    {
+        //Если такого пользователя с таким паролем нет - сообщаем клиенту об ошибке аутентификации
+        Data.clear();
+        QDataStream out(&Data, QIODevice::WriteOnly);
+        out.setVersion(QDataStream::Qt_6_2);
+        out << SignalType::AuthError;
+        socket->write(Data);
+
+        qDebug() << username << " error auth";
+    }
+}
+
+//Обработка регистрации пользователя
+void Server::RegistrUser(QString username, QString password)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Users WHERE Username = :username"); //Проверка на существование пользователя с указанным username
+    query.bindValue(":username", username);
+    query.exec();
+    if(query.next())
+    {
+        //Если пользователь с таким username уже существует - сообщаем клиенту об ошибке регистрации
+        Data.clear();
+        QDataStream out(&Data, QIODevice::WriteOnly);
+        out.setVersion(QDataStream::Qt_6_2);
+        out << SignalType::AuthError;
+        socket->write(Data);
+
+        qDebug() << username << " registr error";
+        return;
+    }
+    //Если пользователя с таким username нет - регистрируем
+    QSqlQuery registrquery;
+    registrquery.prepare("INSERT INTO Users (Username, User_Password) VALUES (:username, :password)");
+    registrquery.bindValue(":username", username);
+    registrquery.bindValue(":password", password);
+    registrquery.exec();
+    AuthUser(username, password); //После добавления пользователя - аутентифицируем его
+    qDebug() << "Registration " << username << " done";
 }
 
 void Server::slotReadyRead()
@@ -89,20 +149,26 @@ void Server::slotReadyRead()
             QString str;
             in >> str;
             qDebug() << "User " << socketDescriptor() << " sent the message " << str;
-            SendToClient(str);
+
             break;
         }
-        case SignalType::AuthData:
+        case SignalType::Authentication:
         {
             QString username, password;
             in >> username;
             in >> password;
-
+            AuthUser(username, password);
+            break;
+        }
+        case SignalType::Registration:
+        {
+            QString username, password;
+            in >> username;
+            in >> password;
+            RegistrUser(username, password);
             break;
         }
         }
-
-
 
     }
     else
@@ -111,12 +177,14 @@ void Server::slotReadyRead()
     }
 }
 
+//При отключении клиента удалить его сокет
 void Server::disablingTheClient()
 {
     if(socket)
     {
-        Sockets.removeOne(socket);
+        if (Clients[socket].Id_User != -1) qDebug() << "Client (Id_User =" << Clients[socket].Id_User << ") disconnected";
+        else
+        Clients.remove(socket);
         socket->deleteLater();
-        qDebug() << "Client disconnected";
     }
 }

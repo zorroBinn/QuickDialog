@@ -19,10 +19,17 @@ public:
     QTcpSocket* socket;
 
 private:
-    QVector <QTcpSocket*> Sockets;
+    //QVector <QTcpSocket*> Sockets;
+    struct ClientData
+    {
+        int Id_User;
+    };
+    QMap<QTcpSocket *, ClientData> Clients;
     QByteArray Data;
     QSqlDatabase ServerDatabase;
-    void SendToClient(QString str);
+    //void SendToClient(QString str);
+    void AuthUser(QString username, QString password);
+    void RegistrUser(QString username, QString password);
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

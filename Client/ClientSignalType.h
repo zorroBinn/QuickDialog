@@ -4,7 +4,10 @@
 enum class ClientSignalType
 {
     UserMessage,
-    AuthData
+    Registration,
+    Authentication,
+    AuthDone,
+    AuthError
 };
 
 #endif // CLIENTSIGNALTYPE_H

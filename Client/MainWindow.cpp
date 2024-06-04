@@ -9,11 +9,13 @@ MainWindow::MainWindow(QWidget *parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-    Auth *authform = new Auth;
+    socket->connectToHost("192.168.1.103", 2024);
+    authform = new Auth(); //Окно авторизации
     authform->show();
-
-    this->show();
-    //ui->pushButton_chat_newUser->setVisible(false);
+    connect(authform, &Auth::registerUser, this, &MainWindow::registerUser);
+    connect(authform, &Auth::authUser, this, &MainWindow::authUser);
+    //this->show();
+    ui->pushButton_Chat_NewUser->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -36,15 +38,44 @@ void MainWindow::slotReadyRead()
     QDataStream in(socket);
     in.setVersion(QDataStream::Qt_6_2);
     if(in.status() == QDataStream::Ok) {
-        QString str;
-        in >> str;
-        ui->textBrowser_CurrentChat->append(str);
+        ClientSignalType type;
+        in >> type;
+
+        switch(type)
+        {
+        case ClientSignalType::AuthDone:
+        {
+            in >> Username;
+            authform->close();
+            this->show();
+            break;
+        }
+        case ClientSignalType::AuthError:
+        {
+            connect(this, &MainWindow::AuthError, authform, &Auth::AuthError);
+            emit AuthError();
+            break;
+        }
+        }
     }
 }
 
-void MainWindow::on_pushButton_connect_clicked()
+void MainWindow::registerUser(const QString &username, const QString &password)
 {
-    socket->connectToHost("192.168.1.103", 2024);
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::Registration << username << password;
+    socket->write(Data);
+}
+
+void MainWindow::authUser(const QString &username, const QString &password)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::Authentication << username << password;
+    socket->write(Data);
 }
 
 

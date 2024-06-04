@@ -4,7 +4,10 @@
 enum class SignalType
 {
     UserMessage,
-    AuthData
+    Registration,
+    Authentication,
+    AuthDone,
+    AuthError
 };
 
 #endif // SIGNALTYPE_H

@@ -7,6 +7,7 @@
 #include "AddUserToChat.h"
 #include "NewChat.h"
 #include "ClientSignalType.h"
+//#include <qDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,18 +27,24 @@ private:
     Ui::MainWindow *ui;
     QTcpSocket *socket;
     QByteArray Data;
-    QByteArray UnicName;
+    QString Username;
+    Auth *authform;
     void SendToServer(QString str);
 
 public slots:
     void slotReadyRead();
+    void registerUser(const QString &username, const QString &password);
+    void authUser(const QString &username, const QString &password);
+
 private slots:
-    void on_pushButton_connect_clicked();
     void on_pushButton_Send_clicked();
     void on_lineEdit_Search_returnPressed();
     void on_lineEdit_Mess_returnPressed();
     void on_MainWindow_destroyed();
     void on_pushButton_Chat_NewUser_clicked();
     void on_pushButton_NewChat_clicked();
+
+signals:
+    void AuthError();
 };
 #endif // MAINWINDOW_H

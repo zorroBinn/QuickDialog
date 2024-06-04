@@ -33,6 +33,7 @@ public:
     QLineEdit *lineEdit_Username;
     QSpacerItem *verticalSpacer;
     QLineEdit *lineEdit_Password;
+    QLabel *label_Error;
 
     void setupUi(QWidget *Auth)
     {
@@ -112,6 +113,17 @@ public:
 
         verticalLayout->addWidget(lineEdit_Password);
 
+        label_Error = new QLabel(widget_down);
+        label_Error->setObjectName("label_Error");
+        label_Error->setGeometry(QRect(80, 120, 441, 27));
+        label_Error->setMinimumSize(QSize(441, 27));
+        label_Error->setMaximumSize(QSize(441, 27));
+        label_Error->setStyleSheet(QString::fromUtf8("background-color: rgba(29, 119, 255, 0);\n"
+"color: rgb(255, 133, 135);\n"
+"font: italic 14pt \"Comic Sans MS\";\n"
+"\n"
+""));
+        label_Error->setAlignment(Qt::AlignCenter);
 
         retranslateUi(Auth);
 
@@ -132,6 +144,7 @@ public:
         label_Auth->setText(QCoreApplication::translate("Auth", "\320\220\320\262\321\202\320\276\321\200\320\270\320\267\320\260\321\206\320\270\321\217", nullptr));
         lineEdit_Username->setPlaceholderText(QCoreApplication::translate("Auth", "\320\230\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
         lineEdit_Password->setPlaceholderText(QCoreApplication::translate("Auth", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr));
+        label_Error->setText(QCoreApplication::translate("Auth", "\320\237\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\214 \321\201 \321\202\320\260\320\272\320\270\320\274 \320\270\320\274\320\265\320\275\320\265\320\274 \321\203\320\266\320\265 \321\201\321\203\321\211\320\265\321\201\321\202\320\262\321\203\320\265\321\202", nullptr));
     } // retranslateUi
 
 };

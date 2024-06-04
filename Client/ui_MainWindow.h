@@ -43,7 +43,6 @@ public:
     QPushButton *pushButton_Send;
     QTextBrowser *textBrowser_CurrentChat;
     QLineEdit *lineEdit_Mess;
-    QPushButton *pushButton_connect;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -162,12 +161,6 @@ public:
 
         gridLayout->addWidget(lineEdit_Mess, 3, 0, 1, 2);
 
-        pushButton_connect = new QPushButton(groupBox_Chat);
-        pushButton_connect->setObjectName("pushButton_connect");
-        pushButton_connect->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-
-        gridLayout->addWidget(pushButton_connect, 1, 0, 1, 1);
-
 
         formLayout->setWidget(0, QFormLayout::FieldRole, groupBox_Chat);
 
@@ -199,7 +192,6 @@ public:
         pushButton_Chat_NewUser->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\203\321\207\320\260\321\201\321\202\320\275\320\270\320\272\320\260", nullptr));
         pushButton_Send->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
         lineEdit_Mess->setPlaceholderText(QCoreApplication::translate("MainWindow", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \321\201\320\262\320\276\321\221 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265", nullptr));
-        pushButton_connect->setText(QCoreApplication::translate("MainWindow", "Connect", nullptr));
     } // retranslateUi
 
 };

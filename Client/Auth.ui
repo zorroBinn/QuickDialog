@@ -191,6 +191,41 @@ border-right: 0px;</string>
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label_Error">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>120</y>
+      <width>441</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>441</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>441</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(29, 119, 255, 0);
+color: rgb(255, 133, 135);
+font: italic 14pt &quot;Comic Sans MS&quot;;
+
+</string>
+    </property>
+    <property name="text">
+     <string>Пользователь с таким именем уже существует</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
