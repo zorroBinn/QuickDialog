@@ -58,7 +58,8 @@ color: rgb(239, 255, 246);</string>
      <property name="styleSheet">
       <string notr="true">border: none;
 color: rgb(234, 255, 252);
-font: italic 14pt &quot;Comic Sans MS&quot;;</string>
+font: italic 14pt &quot;Comic Sans MS&quot;;
+background-color: rgba(255, 255, 255, 0);</string>
      </property>
      <property name="title">
       <string>Участники</string>
@@ -67,29 +68,6 @@ font: italic 14pt &quot;Comic Sans MS&quot;;</string>
       <set>Qt::AlignCenter</set>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QScrollArea" name="scrollArea_Participants">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border: 1px solid rgb(0, 0, 127);</string>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>312</width>
-           <height>207</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-      </item>
       <item row="0" column="0">
        <spacer name="verticalSpacer">
         <property name="focusPolicy">
@@ -104,10 +82,17 @@ font: italic 14pt &quot;Comic Sans MS&quot;;</string>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>10</height>
+          <height>18</height>
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="1" column="0">
+       <widget class="QListWidget" name="listWidget">
+        <property name="styleSheet">
+         <string notr="true">border: 1px solid rgb(0, 0, 190)</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -144,7 +129,7 @@ background-color: rgba(255, 255, 255, 0);</string>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>10</height>
+          <height>18</height>
          </size>
         </property>
        </spacer>
@@ -166,26 +151,10 @@ font: italic 14pt &quot;Comic Sans MS&quot;;</string>
        </widget>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea_Users">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
+       <widget class="QListWidget" name="listWidget_AddUser">
         <property name="styleSheet">
-         <string notr="true">border: 1px solid rgb(0, 0, 127);</string>
+         <string notr="true">border: 1px solid rgb(0, 0, 190)</string>
         </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_2">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>312</width>
-           <height>169</height>
-          </rect>
-         </property>
-        </widget>
        </widget>
       </item>
      </layout>

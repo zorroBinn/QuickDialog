@@ -29,7 +29,9 @@ private:
     QByteArray Data;
     QString Username;
     Auth *authform;
+    NewChat *newchat;
     void SendToServer(QString str);
+    void GetAllUsers();
 
 public slots:
     void slotReadyRead();
@@ -40,11 +42,12 @@ private slots:
     void on_pushButton_Send_clicked();
     void on_lineEdit_Search_returnPressed();
     void on_lineEdit_Mess_returnPressed();
-    void on_MainWindow_destroyed();
     void on_pushButton_Chat_NewUser_clicked();
     void on_pushButton_NewChat_clicked();
+    void newChatDestroyed();
 
 signals:
-    void AuthError();
+    void AuthError(); //Сигнал ошибки аутентификации
+    void AllUsers(QStringList users); //Сигнал для отправки списка пользователей в окно создания нового чата
 };
 #endif // MAINWINDOW_H

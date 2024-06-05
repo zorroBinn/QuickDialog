@@ -14,6 +14,7 @@ Auth::~Auth()
     delete ui;
 }
 
+//Если сервер сообщил об ошибке аутентификации - вывод информации об ошибке в соответствии с предыдущим действием
 void Auth::AuthError()
 {
     if(IsRegistration)
@@ -40,10 +41,14 @@ void Auth::on_lineEdit_Password_returnPressed()
 
 void Auth::on_lineEdit_Username_returnPressed()
 {
-    on_pushButton_Auth_clicked();
+    if(ui->lineEdit_Password->text() == "")
+    {
+        ui->lineEdit_Password->setFocus();
+    }
+    else on_pushButton_Auth_clicked();
 }
 
-
+//Аутентификация пользователя по введённым данным
 void Auth::on_pushButton_Auth_clicked()
 {
     if(ui->lineEdit_Username->text().trimmed() != "" && ui->lineEdit_Password->text().trimmed() != "")
@@ -55,7 +60,7 @@ void Auth::on_pushButton_Auth_clicked()
     }
 }
 
-
+//Регистрация пользователя по введённым данным
 void Auth::on_pushButton_Registr_clicked()
 {
     if(ui->lineEdit_Username->text().trimmed() != "" && ui->lineEdit_Password->text().trimmed() != "")

@@ -107,27 +107,13 @@ font: italic 14pt &quot;Comic Sans MS&quot;;</string>
          </widget>
         </item>
         <item>
-         <widget class="QScrollArea" name="scrollArea_Users">
-          <property name="focusPolicy">
-           <enum>Qt::ClickFocus</enum>
-          </property>
+         <widget class="QListWidget" name="listWidget_AllUsers">
           <property name="styleSheet">
-           <string notr="true">border: 1px solid rgb(0, 0, 127);
-</string>
+           <string notr="true">border: 1px solid rgb(0, 0, 190)</string>
           </property>
-          <property name="widgetResizable">
+          <property name="sortingEnabled">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents_2">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>310</width>
-             <height>308</height>
-            </rect>
-           </property>
-          </widget>
          </widget>
         </item>
        </layout>

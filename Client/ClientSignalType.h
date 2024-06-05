@@ -7,7 +7,8 @@ enum class ClientSignalType
     Registration,
     Authentication,
     AuthDone,
-    AuthError
+    AuthError,
+    GetAllUsers
 };
 
 #endif // CLIENTSIGNALTYPE_H

@@ -30,6 +30,7 @@ private:
     //void SendToClient(QString str);
     void AuthUser(QString username, QString password);
     void RegistrUser(QString username, QString password);
+    void GetAllUsers();
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

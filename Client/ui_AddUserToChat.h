@@ -16,8 +16,8 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -31,15 +31,13 @@ public:
     QLabel *label_ChatName;
     QGroupBox *groupBox_Participants;
     QGridLayout *gridLayout;
-    QScrollArea *scrollArea_Participants;
-    QWidget *scrollAreaWidgetContents;
     QSpacerItem *verticalSpacer;
+    QListWidget *listWidget;
     QGroupBox *groupBox_AddUser;
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer_2;
     QLineEdit *lineEdit_Search;
-    QScrollArea *scrollArea_Users;
-    QWidget *scrollAreaWidgetContents_2;
+    QListWidget *listWidget_AddUser;
     QPushButton *pushButton_AddUsers;
 
     void setupUi(QWidget *AddUserToChat)
@@ -69,25 +67,20 @@ public:
         groupBox_Participants->setFocusPolicy(Qt::NoFocus);
         groupBox_Participants->setStyleSheet(QString::fromUtf8("border: none;\n"
 "color: rgb(234, 255, 252);\n"
-"font: italic 14pt \"Comic Sans MS\";"));
+"font: italic 14pt \"Comic Sans MS\";\n"
+"background-color: rgba(255, 255, 255, 0);"));
         groupBox_Participants->setAlignment(Qt::AlignCenter);
         gridLayout = new QGridLayout(groupBox_Participants);
         gridLayout->setObjectName("gridLayout");
-        scrollArea_Participants = new QScrollArea(groupBox_Participants);
-        scrollArea_Participants->setObjectName("scrollArea_Participants");
-        scrollArea_Participants->setFocusPolicy(Qt::NoFocus);
-        scrollArea_Participants->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 127);"));
-        scrollArea_Participants->setWidgetResizable(true);
-        scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 312, 207));
-        scrollArea_Participants->setWidget(scrollAreaWidgetContents);
-
-        gridLayout->addWidget(scrollArea_Participants, 1, 0, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 10, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
+        verticalSpacer = new QSpacerItem(20, 18, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
 
         gridLayout->addItem(verticalSpacer, 0, 0, 1, 1);
+
+        listWidget = new QListWidget(groupBox_Participants);
+        listWidget->setObjectName("listWidget");
+        listWidget->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 190)"));
+
+        gridLayout->addWidget(listWidget, 1, 0, 1, 1);
 
 
         verticalLayout_2->addWidget(groupBox_Participants);
@@ -102,7 +95,7 @@ public:
         groupBox_AddUser->setAlignment(Qt::AlignCenter);
         verticalLayout = new QVBoxLayout(groupBox_AddUser);
         verticalLayout->setObjectName("verticalLayout");
-        verticalSpacer_2 = new QSpacerItem(20, 10, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
+        verticalSpacer_2 = new QSpacerItem(20, 18, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
 
         verticalLayout->addItem(verticalSpacer_2);
 
@@ -116,17 +109,11 @@ public:
 
         verticalLayout->addWidget(lineEdit_Search);
 
-        scrollArea_Users = new QScrollArea(groupBox_AddUser);
-        scrollArea_Users->setObjectName("scrollArea_Users");
-        scrollArea_Users->setFocusPolicy(Qt::ClickFocus);
-        scrollArea_Users->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 127);"));
-        scrollArea_Users->setWidgetResizable(true);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName("scrollAreaWidgetContents_2");
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 312, 169));
-        scrollArea_Users->setWidget(scrollAreaWidgetContents_2);
+        listWidget_AddUser = new QListWidget(groupBox_AddUser);
+        listWidget_AddUser->setObjectName("listWidget_AddUser");
+        listWidget_AddUser->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 190)"));
 
-        verticalLayout->addWidget(scrollArea_Users);
+        verticalLayout->addWidget(listWidget_AddUser);
 
 
         verticalLayout_2->addWidget(groupBox_AddUser);

@@ -15,8 +15,8 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -33,8 +33,7 @@ public:
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer_2;
     QLineEdit *lineEdit_Search;
-    QScrollArea *scrollArea_Users;
-    QWidget *scrollAreaWidgetContents_2;
+    QListWidget *listWidget_AllUsers;
     QPushButton *pushButton_CreateChat;
 
     void setupUi(QWidget *NewChat)
@@ -86,18 +85,12 @@ public:
 
         verticalLayout->addWidget(lineEdit_Search);
 
-        scrollArea_Users = new QScrollArea(groupBox_AddUsers);
-        scrollArea_Users->setObjectName("scrollArea_Users");
-        scrollArea_Users->setFocusPolicy(Qt::ClickFocus);
-        scrollArea_Users->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 127);\n"
-""));
-        scrollArea_Users->setWidgetResizable(true);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName("scrollAreaWidgetContents_2");
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 310, 308));
-        scrollArea_Users->setWidget(scrollAreaWidgetContents_2);
+        listWidget_AllUsers = new QListWidget(groupBox_AddUsers);
+        listWidget_AllUsers->setObjectName("listWidget_AllUsers");
+        listWidget_AllUsers->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 190)"));
+        listWidget_AllUsers->setSortingEnabled(true);
 
-        verticalLayout->addWidget(scrollArea_Users);
+        verticalLayout->addWidget(listWidget_AllUsers);
 
 
         verticalLayout_2->addWidget(groupBox_AddUsers);

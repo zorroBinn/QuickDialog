@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include <QDebug>
 
+//Конструктор основной формы
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -12,15 +14,18 @@ MainWindow::MainWindow(QWidget *parent)
     socket->connectToHost("192.168.1.103", 2024);
     authform = new Auth(); //Окно авторизации
     authform->show();
+    newchat = new NewChat(); //Окно создания нового чата
+    connect(newchat, &NewChat::thisClosed, this, &MainWindow::newChatDestroyed);
     connect(authform, &Auth::registerUser, this, &MainWindow::registerUser);
     connect(authform, &Auth::authUser, this, &MainWindow::authUser);
-    //this->show();
-    ui->pushButton_Chat_NewUser->setVisible(false);
+    //ui->pushButton_Chat_NewUser->setVisible(false);
 }
 
+//Деструктор
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete this->newchat;
 }
 
 void MainWindow::SendToServer(QString str)
@@ -31,6 +36,15 @@ void MainWindow::SendToServer(QString str)
     out << ClientSignalType::UserMessage << str;
     socket->write(Data);
     ui->lineEdit_Mess->clear();
+}
+
+void MainWindow::GetAllUsers()
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::GetAllUsers;
+    socket->write(Data);
 }
 
 void MainWindow::slotReadyRead()
@@ -56,6 +70,17 @@ void MainWindow::slotReadyRead()
             emit AuthError();
             break;
         }
+        case ClientSignalType::GetAllUsers:
+        {
+            QStringList users;
+            in >> users;
+            if(!newchat->isHidden())
+            {
+                connect(this, &MainWindow::AllUsers, newchat, &NewChat::GetUsersList);
+                emit AllUsers(users);
+            }
+            break;
+        }
         }
     }
 }
@@ -78,10 +103,16 @@ void MainWindow::authUser(const QString &username, const QString &password)
     socket->write(Data);
 }
 
+void MainWindow::newChatDestroyed()
+{
+    this->setDisabled(false);
+    Data.clear();
+}
+
 
 void MainWindow::on_pushButton_Send_clicked()
 {
-    SendToServer(ui->lineEdit_Mess->text());
+    if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text().trimmed());
 }
 
 
@@ -93,13 +124,7 @@ void MainWindow::on_lineEdit_Search_returnPressed()
 
 void MainWindow::on_lineEdit_Mess_returnPressed()
 {
-    if(ui->lineEdit_Mess->text() != "") SendToServer(ui->lineEdit_Mess->text());
-}
-
-
-void MainWindow::on_MainWindow_destroyed()
-{
-
+    if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text());
 }
 
 
@@ -112,7 +137,8 @@ void MainWindow::on_pushButton_Chat_NewUser_clicked()
 
 void MainWindow::on_pushButton_NewChat_clicked()
 {
-    NewChat* newChat = new NewChat();
-    newChat->show();
+    newchat->show();
+    this->setDisabled(true);
+    GetAllUsers();
 }
 

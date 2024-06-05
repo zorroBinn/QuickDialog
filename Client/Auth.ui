@@ -55,6 +55,9 @@
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
+    </property>
     <property name="toolTip">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вход в аккаунт с введёнными учётными данными&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -79,6 +82,9 @@ font: 14pt &quot;Comic Sans MS&quot;;</string>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
     </property>
     <property name="toolTip">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Регистрация нового аккаунта по введённым учётным данным&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -169,6 +175,9 @@ border-right: 0px;</string>
          <italic>true</italic>
          <bold>true</bold>
         </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(46, 0, 83);

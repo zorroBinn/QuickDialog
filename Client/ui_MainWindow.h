@@ -74,7 +74,7 @@ public:
         pushButton_NewChat->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.488636 rgba(80, 0, 122, 255), stop:0.806818 rgba(44, 18, 97, 255));\n"
 "font: 700 40pt \"Times New Roman\";\n"
 "color: rgb(198, 255, 255);\n"
-"border: 2px solid rgb(0, 0, 190);"));
+"border: 1px solid rgb(0, 0, 190);"));
         splitter->addWidget(pushButton_NewChat);
         lineEdit_Search = new QLineEdit(splitter);
         lineEdit_Search->setObjectName("lineEdit_Search");
@@ -116,10 +116,10 @@ public:
         pushButton_Chat_NewUser->setMaximumSize(QSize(200, 35));
         pushButton_Chat_NewUser->setCursor(QCursor(Qt::PointingHandCursor));
         pushButton_Chat_NewUser->setFocusPolicy(Qt::ClickFocus);
-        pushButton_Chat_NewUser->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 74);\n"
+        pushButton_Chat_NewUser->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 80);\n"
 "font: 700 16pt \"Times New Roman\";\n"
 "color: rgb(198, 255, 255);\n"
-"border: 2px solid rgb(0, 0, 190);"));
+"border: 1px solid rgb(0, 0, 190);"));
 
         gridLayout->addWidget(pushButton_Chat_NewUser, 1, 1, 1, 1);
 

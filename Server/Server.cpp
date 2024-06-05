@@ -133,6 +133,29 @@ void Server::RegistrUser(QString username, QString password)
     qDebug() << "Registration " << username << " done";
 }
 
+//Отправка списка пользователей клиенту
+void Server::GetAllUsers()
+{
+    QSqlQuery query;
+    int current_id = Clients[socket].Id_User; //Id пользователя от которого поступил запрос
+    query.prepare("SELECT Username FROM Users WHERE Id_User != :current_id"); //Исключаем из запроса самого клиента, от которого поступил запрос
+    query.bindValue(":current_id", current_id);
+    query.exec();
+    QStringList users;
+    while (query.next())
+    {
+        users << query.value(0).toString();
+    }
+    //Отправляем на клиент пользователю список всех пользователей (без самого пользователя)
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << SignalType::GetAllUsers << users;
+    socket->write(Data);
+
+    qDebug() << "Sending to the user (Id_User = " << current_id << ") is done";
+}
+
 void Server::slotReadyRead()
 {
     socket = (QTcpSocket*)sender();
@@ -168,6 +191,11 @@ void Server::slotReadyRead()
             RegistrUser(username, password);
             break;
         }
+        case SignalType::GetAllUsers:
+        {
+            GetAllUsers();
+            break;
+        }
         }
 
     }
@@ -183,7 +211,6 @@ void Server::disablingTheClient()
     if(socket)
     {
         if (Clients[socket].Id_User != -1) qDebug() << "Client (Id_User =" << Clients[socket].Id_User << ") disconnected";
-        else
         Clients.remove(socket);
         socket->deleteLater();
     }

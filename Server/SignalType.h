@@ -7,7 +7,8 @@ enum class SignalType
     Registration,
     Authentication,
     AuthDone,
-    AuthError
+    AuthError,
+    GetAllUsers
 };
 
 #endif // SIGNALTYPE_H
