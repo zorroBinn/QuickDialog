@@ -32,7 +32,7 @@ private:
     QMap<QString, Qt::CheckState> UserCheckStates; //Хранит пары “имя пользователя - состояние флажка”
 
 signals:
-    void CreateNewChat(QStringList users, const QString chatname);
+    void createNewChat(QStringList users, const QString chatname);
     void thisClosed();
 };
 

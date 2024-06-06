@@ -124,11 +124,10 @@ void Server::RegistrUser(QString username, QString password)
         return;
     }
     //Если пользователя с таким username нет - регистрируем
-    QSqlQuery registrquery;
-    registrquery.prepare("INSERT INTO Users (Username, User_Password) VALUES (:username, :password)");
-    registrquery.bindValue(":username", username);
-    registrquery.bindValue(":password", password);
-    registrquery.exec();
+    query.prepare("INSERT INTO Users (Username, User_Password) VALUES (:username, :password)");
+    query.bindValue(":username", username);
+    query.bindValue(":password", password);
+    query.exec();
     AuthUser(username, password); //После добавления пользователя - аутентифицируем его
     qDebug() << "Registration " << username << " done";
 }
@@ -154,6 +153,41 @@ void Server::GetAllUsers()
     socket->write(Data);
 
     qDebug() << "Sending to the user (Id_User = " << current_id << ") is done";
+}
+
+//Создание нового чата
+void Server::createNewChat(QStringList usernames, QString chatname)
+{
+    QSqlQuery query;
+    QList<int> userIds;
+    //Сопоставляем username и Id_User
+    foreach (const QString &user, usernames) {
+        query.prepare("SELECT Id_User FROM Users WHERE Username = :username");
+        query.bindValue(":username", user);
+        query.exec();
+        query.next();
+        userIds.append(query.value(0).toInt());
+    }
+    userIds.append(Clients[socket].Id_User); //Также добавляем id пользователя, от которого поступил запрос
+    std::sort(userIds.begin(), userIds.end());
+    QStringList ids;
+    foreach (int id, userIds) {
+        ids << QString::number(id);
+    }
+    QString chatmembers = ids.join(' '); //Строка для БД участников чата
+    //Проверяем на существование такой чат
+    query.prepare("SELECT * FROM Chats WHERE Chat_Name = :chatname AND Ids_Participants = :chatmembers");
+    query.bindValue(":chatname", chatname);
+    query.bindValue(":chatmembers", chatmembers);
+    query.exec();
+    if(query.next()) return;
+    //Добавляем новый чат в таблицу Chats
+    query.prepare("INSERT INTO Chats (Chat_Name, Ids_Participants) VALUES (:chatname, :chatmembers)");
+    query.bindValue(":chatname", chatname);
+    query.bindValue(":chatmembers", chatmembers);
+    query.exec();
+
+    qDebug() << "Chat (Id_Chat = " << query.lastInsertId().toInt() << ") created";
 }
 
 void Server::slotReadyRead()
@@ -194,6 +228,15 @@ void Server::slotReadyRead()
         case SignalType::GetAllUsers:
         {
             GetAllUsers();
+            break;
+        }
+        case SignalType::CreateNewChat:
+        {
+            QStringList users;
+            QString chatname;
+            in >> users;
+            in >> chatname;
+            createNewChat(users, chatname);
             break;
         }
         }

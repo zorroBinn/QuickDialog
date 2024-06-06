@@ -45,6 +45,8 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "username",
     "password",
     "authUser",
+    "createNewChat",
+    "chatname",
     "on_pushButton_Send_clicked",
     "on_lineEdit_Search_returnPressed",
     "on_lineEdit_Mess_returnPressed",
@@ -63,7 +65,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,19 +73,20 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   80,    2, 0x06,    1 /* Public */,
-       3,    1,   81,    2, 0x06,    2 /* Public */,
+       1,    0,   86,    2, 0x06,    1 /* Public */,
+       3,    1,   87,    2, 0x06,    2 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       5,    0,   84,    2, 0x0a,    4 /* Public */,
-       6,    2,   85,    2, 0x0a,    5 /* Public */,
-       9,    2,   90,    2, 0x0a,    8 /* Public */,
-      10,    0,   95,    2, 0x08,   11 /* Private */,
-      11,    0,   96,    2, 0x08,   12 /* Private */,
-      12,    0,   97,    2, 0x08,   13 /* Private */,
-      13,    0,   98,    2, 0x08,   14 /* Private */,
-      14,    0,   99,    2, 0x08,   15 /* Private */,
-      15,    0,  100,    2, 0x08,   16 /* Private */,
+       5,    0,   90,    2, 0x0a,    4 /* Public */,
+       6,    2,   91,    2, 0x0a,    5 /* Public */,
+       9,    2,   96,    2, 0x0a,    8 /* Public */,
+      10,    2,  101,    2, 0x0a,   11 /* Public */,
+      12,    0,  106,    2, 0x08,   14 /* Private */,
+      13,    0,  107,    2, 0x08,   15 /* Private */,
+      14,    0,  108,    2, 0x08,   16 /* Private */,
+      15,    0,  109,    2, 0x08,   17 /* Private */,
+      16,    0,  110,    2, 0x08,   18 /* Private */,
+      17,    0,  111,    2, 0x08,   19 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -93,6 +96,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    7,    8,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    7,    8,
+    QMetaType::Void, QMetaType::QStringList, QMetaType::QString,    4,   11,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -127,6 +131,10 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        // method 'createNewChat'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString, std::false_type>,
         // method 'on_pushButton_Send_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_lineEdit_Search_returnPressed'
@@ -154,12 +162,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->slotReadyRead(); break;
         case 3: _t->registerUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 4: _t->authUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
-        case 5: _t->on_pushButton_Send_clicked(); break;
-        case 6: _t->on_lineEdit_Search_returnPressed(); break;
-        case 7: _t->on_lineEdit_Mess_returnPressed(); break;
-        case 8: _t->on_pushButton_Chat_NewUser_clicked(); break;
-        case 9: _t->on_pushButton_NewChat_clicked(); break;
-        case 10: _t->newChatDestroyed(); break;
+        case 5: _t->createNewChat((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 6: _t->on_pushButton_Send_clicked(); break;
+        case 7: _t->on_lineEdit_Search_returnPressed(); break;
+        case 8: _t->on_lineEdit_Mess_returnPressed(); break;
+        case 9: _t->on_pushButton_Chat_NewUser_clicked(); break;
+        case 10: _t->on_pushButton_NewChat_clicked(); break;
+        case 11: _t->newChatDestroyed(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -200,13 +209,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

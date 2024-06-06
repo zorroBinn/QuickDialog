@@ -1,5 +1,6 @@
 #include "NewChat.h"
 #include "ui_NewChat.h"
+#include <QDebug>
 
 NewChat::NewChat(QWidget *parent)
     : QWidget(parent)
@@ -33,24 +34,16 @@ void NewChat::on_pushButton_CreateChat_clicked()
 {
     if(ui->lineEdit_ChatName->text().trimmed() != "")
     {
-        QStringList selectedusers;
-        //Отбираем отмеченных пользователей
-        for(auto it = UserCheckStates.begin(); it != UserCheckStates.end(); ++it) {
-            if(it.value() == Qt::Checked) {
-                selectedusers << it.key();
+        QStringList selectedusers; //Отмеченные пользователи
+        ui->lineEdit_Search->setText("");
+        for(int i = 0; i < ui->listWidget_AllUsers->count(); ++i) {
+            QListWidgetItem *item = ui->listWidget_AllUsers->item(i);
+            if(item->checkState() == Qt::Checked) {
+                selectedusers << item->text();
             }
         }
-        QString chatname = ui->lineEdit_ChatName->text(); //Получаем название чата
-        ui->lineEdit_ChatName->setStyleSheet("border: 1px solid rgb(0, 0, 255); "
-                                             "color: rgb(234, 255, 252); "
-                                             "background-color: rgb(0, 0, 70); "
-                                             "font: italic 14pt \"Comic Sans MS\";");
-        emit CreateNewChat(selectedusers, chatname);
-        //Очищаем и закрываем форму
-        UserCheckStates.clear();
-        ui->listWidget_AllUsers->clear();
-        ui->lineEdit_ChatName->clear();
-        ui->lineEdit_Search->clear();
+        QString chatname = ui->lineEdit_ChatName->text(); //Название чата
+        emit createNewChat(selectedusers, chatname);
         this->close();
     }
     else
@@ -84,8 +77,17 @@ void NewChat::on_lineEdit_Search_textChanged(const QString &arg1)
     }
 }
 
+//При закрытии формы - очищаем её
 void NewChat::closeEvent(QCloseEvent *event)
 {
+    ui->lineEdit_ChatName->setStyleSheet("border: 1px solid rgb(0, 0, 255); "
+                                         "color: rgb(234, 255, 252); "
+                                         "background-color: rgb(0, 0, 70); "
+                                         "font: italic 14pt \"Comic Sans MS\";");
+    UserCheckStates.clear();
+    ui->listWidget_AllUsers->clear();
+    ui->lineEdit_ChatName->clear();
+    ui->lineEdit_Search->clear();
     emit thisClosed();
     event->accept();
 }

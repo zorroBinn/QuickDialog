@@ -36,7 +36,7 @@ namespace {
 struct qt_meta_stringdata_CLASSNewChatENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSNewChatENDCLASS = QtMocHelpers::stringData(
     "NewChat",
-    "CreateNewChat",
+    "createNewChat",
     "",
     "users",
     "chatname",
@@ -99,7 +99,7 @@ Q_CONSTINIT const QMetaObject NewChat::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSNewChatENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<NewChat, std::true_type>,
-        // method 'CreateNewChat'
+        // method 'createNewChat'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString, std::false_type>,
@@ -126,7 +126,7 @@ void NewChat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         auto *_t = static_cast<NewChat *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->CreateNewChat((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 0: _t->createNewChat((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 1: _t->thisClosed(); break;
         case 2: _t->GetUsersList((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1]))); break;
         case 3: _t->on_pushButton_CreateChat_clicked(); break;
@@ -138,7 +138,7 @@ void NewChat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (NewChat::*)(QStringList , const QString );
-            if (_t _q_method = &NewChat::CreateNewChat; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &NewChat::createNewChat; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
@@ -184,7 +184,7 @@ int NewChat::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void NewChat::CreateNewChat(QStringList _t1, const QString _t2)
+void NewChat::createNewChat(QStringList _t1, const QString _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

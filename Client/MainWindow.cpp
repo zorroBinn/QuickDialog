@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     authform->show();
     newchat = new NewChat(); //Окно создания нового чата
     connect(newchat, &NewChat::thisClosed, this, &MainWindow::newChatDestroyed);
+    connect(newchat, &NewChat::createNewChat, this, &MainWindow::createNewChat);
     connect(authform, &Auth::registerUser, this, &MainWindow::registerUser);
     connect(authform, &Auth::authUser, this, &MainWindow::authUser);
     //ui->pushButton_Chat_NewUser->setVisible(false);
@@ -38,6 +39,7 @@ void MainWindow::SendToServer(QString str)
     ui->lineEdit_Mess->clear();
 }
 
+//Запрос на получение списка всех пользователей
 void MainWindow::GetAllUsers()
 {
     Data.clear();
@@ -85,6 +87,7 @@ void MainWindow::slotReadyRead()
     }
 }
 
+//Запрос на регистрацию нового пользователя
 void MainWindow::registerUser(const QString &username, const QString &password)
 {
     Data.clear();
@@ -94,6 +97,7 @@ void MainWindow::registerUser(const QString &username, const QString &password)
     socket->write(Data);
 }
 
+//Запрос на аутентификацию пользователя
 void MainWindow::authUser(const QString &username, const QString &password)
 {
     Data.clear();
@@ -103,6 +107,17 @@ void MainWindow::authUser(const QString &username, const QString &password)
     socket->write(Data);
 }
 
+//Запрос на создание нового чата
+void MainWindow::createNewChat(QStringList users, const QString chatname)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::CreateNewChat << users << chatname;
+    socket->write(Data);
+}
+
+//При закрытии окна создания нового чата сделать основное окно активным
 void MainWindow::newChatDestroyed()
 {
     this->setDisabled(false);

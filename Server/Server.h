@@ -31,6 +31,7 @@ private:
     void AuthUser(QString username, QString password);
     void RegistrUser(QString username, QString password);
     void GetAllUsers();
+    void createNewChat(QStringList usernames, QString chatname);
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

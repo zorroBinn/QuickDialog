@@ -37,6 +37,7 @@ public slots:
     void slotReadyRead();
     void registerUser(const QString &username, const QString &password);
     void authUser(const QString &username, const QString &password);
+    void createNewChat(QStringList users, const QString chatname);
 
 private slots:
     void on_pushButton_Send_clicked();
