@@ -152,7 +152,7 @@ void Server::GetAllUsers()
     out << SignalType::GetAllUsers << users;
     socket->write(Data);
 
-    qDebug() << "Sending to the user (Id_User = " << current_id << ") is done";
+    qDebug() << "Sending users to the user (Id_User = " << current_id << ") is done";
 }
 
 //Создание нового чата
@@ -188,6 +188,65 @@ void Server::createNewChat(QStringList usernames, QString chatname)
     query.exec();
 
     qDebug() << "Chat (Id_Chat = " << query.lastInsertId().toInt() << ") created";
+}
+
+//Отправка списка чатов клиенту
+void Server::GetChats()
+{
+    int current_id = Clients[socket].Id_User; //Id пользователя от которого поступил запрос
+    QStringList chats;
+    QSqlQuery query;
+    query.exec("SELECT * FROM Chats"); //Получаем список всех чатов
+    while(query.next())
+    {
+        QString chatname = query.value("Chat_Name").toString();
+        QString participants = query.value("Ids_Participants").toString();
+        QStringList participantsList = participants.split(' ');
+        bool current_id_isHere = false;
+        foreach (const QString id, participantsList) {
+            if(current_id == id.toInt())
+            {
+                current_id_isHere = true;
+                break;
+            }
+        }
+        if(!current_id_isHere) continue; //Если в текущем чате нет Id пользователя от которого поступил запрос - переход к следующему
+        //Если чат личный - называем его
+        if(chatname.isEmpty() && participantsList.size() == 2)
+        {
+
+            QString secondusername;
+            //Если текущий пользователь первый - находим username второго
+            if(current_id == participantsList[1].toInt())
+            {
+                query.prepare("SELECT Username FROM Users WHERE Id_User == :secondParticipantId");
+                query.bindValue(":secondParticipantId", participantsList.first());
+                query.exec();
+                secondusername = query.value(0).toString();
+            }
+            //Если текущий пользоватлеь второй - находим username первого
+            else if(current_id == participantsList.first().toInt())
+            {
+                query.prepare("SELECT Username FROM Users WHERE Id_User == :secondParticipantId");
+                query.bindValue(":secondParticipantId", participantsList.first());
+                query.exec();
+                secondusername =  query.value(0).toString();
+            }
+            chats << secondusername;
+        }
+        else
+        {
+            chats << chatname;
+        }
+    }
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << SignalType::GetChats << chats;
+    socket->write(Data);
+
+    qDebug() << "Sending chats to the user (Id_User = " << current_id << ") is done";
+
 }
 
 void Server::slotReadyRead()
@@ -237,6 +296,11 @@ void Server::slotReadyRead()
             in >> users;
             in >> chatname;
             createNewChat(users, chatname);
+            break;
+        }
+        case SignalType::GetChats:
+        {
+            GetChats();
             break;
         }
         }

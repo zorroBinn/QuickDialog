@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-    socket->connectToHost("192.168.1.103", 2024);
+    socket->connectToHost("192.168.67.65", 2024);
     authform = new Auth(); //Окно авторизации
     authform->show();
     newchat = new NewChat(); //Окно создания нового чата
@@ -49,6 +49,17 @@ void MainWindow::GetAllUsers()
     socket->write(Data);
 }
 
+//Запрос на получение списка всех чатов, в которых участвует пользователь
+void MainWindow::GetChats()
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::GetChats;
+    socket->write(Data);
+}
+
+//Получение информации от сервера и  распознавание его типа
 void MainWindow::slotReadyRead()
 {
     QDataStream in(socket);
@@ -64,6 +75,7 @@ void MainWindow::slotReadyRead()
             in >> Username;
             authform->close();
             this->show();
+            GetChats();
             break;
         }
         case ClientSignalType::AuthError:
@@ -83,6 +95,14 @@ void MainWindow::slotReadyRead()
             }
             break;
         }
+        case ClientSignalType::GetChats:
+            QStringList chats;
+            in >> chats;
+            ui->listWidget_Chats->clear();
+            foreach (const QString &chat, chats) {
+                ui->listWidget_Chats->addItem(new QListWidgetItem(chat));
+            }
+            break;
         }
     }
 }

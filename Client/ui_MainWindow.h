@@ -15,8 +15,9 @@
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSplitter>
@@ -36,19 +37,20 @@ public:
     QSplitter *splitter;
     QPushButton *pushButton_NewChat;
     QLineEdit *lineEdit_Search;
-    QListView *listView_Chats;
+    QListWidget *listWidget_Chats;
     QGroupBox *groupBox_Chat;
     QGridLayout *gridLayout;
     QPushButton *pushButton_Chat_NewUser;
     QPushButton *pushButton_Send;
     QTextBrowser *textBrowser_CurrentChat;
     QLineEdit *lineEdit_Mess;
+    QLabel *label;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1032, 706);
+        MainWindow->resize(1075, 747);
         MainWindow->setMinimumSize(QSize(750, 400));
         MainWindow->setCursor(QCursor(Qt::ArrowCursor));
         QIcon icon(QIcon::fromTheme(QString::fromUtf8("contact-new")));
@@ -93,13 +95,13 @@ public:
 
         verticalLayout->addWidget(splitter);
 
-        listView_Chats = new QListView(centralwidget);
-        listView_Chats->setObjectName("listView_Chats");
-        listView_Chats->setFocusPolicy(Qt::NoFocus);
-        listView_Chats->setStyleSheet(QString::fromUtf8("border: none"));
-        listView_Chats->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        listWidget_Chats = new QListWidget(centralwidget);
+        listWidget_Chats->setObjectName("listWidget_Chats");
+        listWidget_Chats->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(24, 0, 36, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
+"color: rgb(238, 255, 246);\n"
+"font: 700 24pt \"Comic Sans MS\";"));
 
-        verticalLayout->addWidget(listView_Chats);
+        verticalLayout->addWidget(listWidget_Chats);
 
 
         formLayout->setLayout(0, QFormLayout::LabelRole, verticalLayout);
@@ -161,6 +163,15 @@ public:
 
         gridLayout->addWidget(lineEdit_Mess, 3, 0, 1, 2);
 
+        label = new QLabel(groupBox_Chat);
+        label->setObjectName("label");
+        label->setMinimumSize(QSize(460, 35));
+        label->setMaximumSize(QSize(460, 35));
+        label->setStyleSheet(QString::fromUtf8("color: rgb(238, 255, 246);\n"
+"font: 700 20pt \"Comic Sans MS\";"));
+
+        gridLayout->addWidget(label, 1, 0, 1, 1);
+
 
         formLayout->setWidget(0, QFormLayout::FieldRole, groupBox_Chat);
 
@@ -192,6 +203,7 @@ public:
         pushButton_Chat_NewUser->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\203\321\207\320\260\321\201\321\202\320\275\320\270\320\272\320\260", nullptr));
         pushButton_Send->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
         lineEdit_Mess->setPlaceholderText(QCoreApplication::translate("MainWindow", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \321\201\320\262\320\276\321\221 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

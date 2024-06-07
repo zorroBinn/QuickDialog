@@ -32,6 +32,7 @@ private:
     NewChat *newchat;
     void SendToServer(QString str);
     void GetAllUsers();
+    void GetChats();
 
 public slots:
     void slotReadyRead();

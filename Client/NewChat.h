@@ -21,9 +21,7 @@ public slots:
 
 private slots:
     void on_pushButton_CreateChat_clicked();
-
     void on_lineEdit_Search_textChanged(const QString &arg1);
-
     void closeEvent (QCloseEvent *event);
 
 

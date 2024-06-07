@@ -32,6 +32,7 @@ private:
     void RegistrUser(QString username, QString password);
     void GetAllUsers();
     void createNewChat(QStringList usernames, QString chatname);
+    void GetChats();
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

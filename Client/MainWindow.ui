@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1032</width>
-    <height>706</height>
+    <width>1075</width>
+    <height>747</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -109,15 +109,11 @@ border-right: 0px;</string>
          </widget>
         </item>
         <item>
-         <widget class="QListView" name="listView_Chats">
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
+         <widget class="QListWidget" name="listWidget_Chats">
           <property name="styleSheet">
-           <string notr="true">border: none</string>
-          </property>
-          <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAsNeeded</enum>
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(24, 0, 36, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));
+color: rgb(238, 255, 246);
+font: 700 24pt &quot;Comic Sans MS&quot;;</string>
           </property>
          </widget>
         </item>
@@ -237,6 +233,29 @@ border-right: 0px;
            </property>
            <property name="placeholderText">
             <string>Введите своё сообщение</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>460</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>460</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(238, 255, 246);
+font: 700 20pt &quot;Comic Sans MS&quot;;</string>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
            </property>
           </widget>
          </item>
