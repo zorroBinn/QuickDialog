@@ -33,6 +33,7 @@ private:
     void GetAllUsers();
     void createNewChat(QStringList usernames, QString chatname);
     void GetChats();
+    void getChatParticipants(uint chatId);
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

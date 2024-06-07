@@ -12,13 +12,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
     socket->connectToHost("192.168.67.65", 2024);
+
     authform = new Auth(); //Окно авторизации
     authform->show();
-    newchat = new NewChat(); //Окно создания нового чата
-    connect(newchat, &NewChat::thisClosed, this, &MainWindow::newChatDestroyed);
-    connect(newchat, &NewChat::createNewChat, this, &MainWindow::createNewChat);
     connect(authform, &Auth::registerUser, this, &MainWindow::registerUser);
     connect(authform, &Auth::authUser, this, &MainWindow::authUser);
+
+    newChat = new NewChat(); //Окно создания нового чата
+    connect(newChat, &NewChat::thisClosed, this, &MainWindow::newChatDestroyed);
+    connect(newChat, &NewChat::createNewChat, this, &MainWindow::createNewChat);
+
+    addUserToChat = new AddUserToChat();
+    connect(addUserToChat, &AddUserToChat::thisClosed, this, &MainWindow::addUserToChatDestroyed);
+
     //ui->pushButton_Chat_NewUser->setVisible(false);
 }
 
@@ -26,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete this->newchat;
+    delete this->newChat;
+    delete this->addUserToChat;
 }
 
 void MainWindow::SendToServer(QString str)
@@ -59,6 +66,16 @@ void MainWindow::GetChats()
     socket->write(Data);
 }
 
+//Запрос на получение списка пользователей текущего чата
+void MainWindow::getChatParticipants(uint chatId)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::GetChatParticipants << chatId;
+    socket->write(Data);
+}
+
 //Получение информации от сервера и  распознавание его типа
 void MainWindow::slotReadyRead()
 {
@@ -88,21 +105,34 @@ void MainWindow::slotReadyRead()
         {
             QStringList users;
             in >> users;
-            if(!newchat->isHidden())
+            if(!newChat->isHidden())
             {
-                connect(this, &MainWindow::AllUsers, newchat, &NewChat::GetUsersList);
-                emit AllUsers(users);
+                connect(this, &MainWindow::allUsers, newChat, &NewChat::GetUsersList);
+                emit allUsers(users);
             }
             break;
         }
         case ClientSignalType::GetChats:
-            QStringList chats;
+        {
+            //QStringList chats;
             in >> chats;
             ui->listWidget_Chats->clear();
-            foreach (const QString &chat, chats) {
-                ui->listWidget_Chats->addItem(new QListWidgetItem(chat));
+            foreach (const QString &chatname, chats) {
+                ui->listWidget_Chats->addItem(new QListWidgetItem(chatname));
             }
             break;
+        }
+        case ClientSignalType::GetChatParticipants:
+        {
+            QStringList participants;
+            in >> participants;
+            if(!addUserToChat->isHidden())
+            {
+                connect(this, &MainWindow::chatParticipants, addUserToChat, &AddUserToChat::getParticipantsList);
+                emit chatParticipants(participants, currentChatName);
+            }
+            break;
+        }
         }
     }
 }
@@ -128,7 +158,7 @@ void MainWindow::authUser(const QString &username, const QString &password)
 }
 
 //Запрос на создание нового чата
-void MainWindow::createNewChat(QStringList users, const QString chatname)
+void MainWindow::createNewChat(QStringList users, const QString &chatname)
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
@@ -137,11 +167,18 @@ void MainWindow::createNewChat(QStringList users, const QString chatname)
     socket->write(Data);
 }
 
-//При закрытии окна создания нового чата сделать основное окно активным
+//При закрытии окна создания нового чата - сделать основное окно активным
 void MainWindow::newChatDestroyed()
 {
     this->setDisabled(false);
-    Data.clear();
+    GetChats();
+}
+
+//При закрытии окна добавления пользователя в чат - сделать основное окно активным
+void MainWindow::addUserToChatDestroyed()
+{
+    this->setDisabled(false);
+    GetChats();
 }
 
 
@@ -165,14 +202,15 @@ void MainWindow::on_lineEdit_Mess_returnPressed()
 
 void MainWindow::on_pushButton_Chat_NewUser_clicked()
 {
-    AddUserToChat* addUser = new AddUserToChat();
-    addUser->show();
+    addUserToChat->show();
+    this->setDisabled(true);
+    getChatParticipants(currentChatId);
 }
 
 
 void MainWindow::on_pushButton_NewChat_clicked()
 {
-    newchat->show();
+    newChat->show();
     this->setDisabled(true);
     GetAllUsers();
 }

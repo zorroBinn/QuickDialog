@@ -194,11 +194,13 @@ void Server::createNewChat(QStringList usernames, QString chatname)
 void Server::GetChats()
 {
     int current_id = Clients[socket].Id_User; //Id пользователя от которого поступил запрос
-    QStringList chats;
+    //QStringList chats;
+    QMap<uint, QString> chatsmap;
     QSqlQuery query;
     query.exec("SELECT * FROM Chats"); //Получаем список всех чатов
     while(query.next())
     {
+        uint idchat = query.value("Id_chats").toUInt();
         QString chatname = query.value("Chat_Name").toString();
         QString participants = query.value("Ids_Participants").toString();
         QStringList participantsList = participants.split(' ');
@@ -232,21 +234,53 @@ void Server::GetChats()
                 query.exec();
                 secondusername =  query.value(0).toString();
             }
-            chats << secondusername;
+            //chats << secondusername;
+            chatsmap[idchat] = secondusername;
         }
         else
         {
-            chats << chatname;
+            //chats << chatname;
+            chatsmap[idchat] = chatname;
         }
     }
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
-    out << SignalType::GetChats << chats;
+    out << SignalType::GetChats << chatsmap;
     socket->write(Data);
 
     qDebug() << "Sending chats to the user (Id_User = " << current_id << ") is done";
 
+}
+
+//Отправка списка участников чата клиенту
+void Server::getChatParticipants(uint chatId)
+{
+    QSqlQuery query;
+    //Получаем список Id участников чата из БД
+    query.prepare("SELECT Ids_Participants FROM Chats WHERE Chat_Id = :chatId");
+    query.bindValue(":chatname", chatId);
+    query.exec();
+    query.next();
+    QString participants = query.value(0).toString();
+    QStringList participantsIdList = participants.split(' ');
+    QStringList participantsList;
+    //Получаем username каждого участника
+    foreach (const QString id, participantsIdList) {
+        query.prepare("SELECT Username FROm Users WHERE Id_User = :id");
+        query.bindValue(":id", id.toInt());
+        query.exec();
+        query.next();
+        participantsList << query.value(0).toString();
+    }
+    //Отправляем на клиент пользователю список всех участников чата
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << SignalType::GetChatParticipants << participantsList;
+    socket->write(Data);
+
+    qDebug() << "Sending chat participants to the user (Id_User = " << Clients[socket].Id_User << ") is done";
 }
 
 void Server::slotReadyRead()
@@ -301,6 +335,13 @@ void Server::slotReadyRead()
         case SignalType::GetChats:
         {
             GetChats();
+            break;
+        }
+        case SignalType::GetChatParticipants:
+        {
+            uint chatId;
+            in >> chatId;
+            getChatParticipants(chatId);
             break;
         }
         }

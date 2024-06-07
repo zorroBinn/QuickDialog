@@ -44,7 +44,7 @@ public:
     QPushButton *pushButton_Send;
     QTextBrowser *textBrowser_CurrentChat;
     QLineEdit *lineEdit_Mess;
-    QLabel *label;
+    QLabel *label_CurrentChatName;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -163,14 +163,14 @@ public:
 
         gridLayout->addWidget(lineEdit_Mess, 3, 0, 1, 2);
 
-        label = new QLabel(groupBox_Chat);
-        label->setObjectName("label");
-        label->setMinimumSize(QSize(460, 35));
-        label->setMaximumSize(QSize(460, 35));
-        label->setStyleSheet(QString::fromUtf8("color: rgb(238, 255, 246);\n"
+        label_CurrentChatName = new QLabel(groupBox_Chat);
+        label_CurrentChatName->setObjectName("label_CurrentChatName");
+        label_CurrentChatName->setMinimumSize(QSize(460, 35));
+        label_CurrentChatName->setMaximumSize(QSize(460, 35));
+        label_CurrentChatName->setStyleSheet(QString::fromUtf8("color: rgb(238, 255, 246);\n"
 "font: 700 20pt \"Comic Sans MS\";"));
 
-        gridLayout->addWidget(label, 1, 0, 1, 1);
+        gridLayout->addWidget(label_CurrentChatName, 1, 0, 1, 1);
 
 
         formLayout->setWidget(0, QFormLayout::FieldRole, groupBox_Chat);
@@ -203,7 +203,7 @@ public:
         pushButton_Chat_NewUser->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\203\321\207\320\260\321\201\321\202\320\275\320\270\320\272\320\260", nullptr));
         pushButton_Send->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
         lineEdit_Mess->setPlaceholderText(QCoreApplication::translate("MainWindow", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \321\201\320\262\320\276\321\221 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        label_CurrentChatName->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

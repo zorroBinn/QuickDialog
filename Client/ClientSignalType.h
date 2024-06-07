@@ -10,7 +10,8 @@ enum class ClientSignalType
     AuthError,
     GetAllUsers,
     CreateNewChat,
-    GetChats
+    GetChats,
+    GetChatParticipants
 };
 
 #endif // CLIENTSIGNALTYPE_H

@@ -10,7 +10,8 @@ enum class SignalType
     AuthError,
     GetAllUsers,
     CreateNewChat,
-    GetChats
+    GetChats,
+    GetChatParticipants
 };
 
 #endif // SIGNALTYPE_H

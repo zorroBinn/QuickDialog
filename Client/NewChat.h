@@ -24,7 +24,6 @@ private slots:
     void on_lineEdit_Search_textChanged(const QString &arg1);
     void closeEvent (QCloseEvent *event);
 
-
 private:
     Ui::NewChat *ui;
     QMap<QString, Qt::CheckState> UserCheckStates; //Хранит пары “имя пользователя - состояние флажка”
