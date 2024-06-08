@@ -88,7 +88,7 @@ background-color: rgba(255, 255, 255, 0);</string>
        </spacer>
       </item>
       <item row="1" column="0">
-       <widget class="QListWidget" name="listWidget">
+       <widget class="QListWidget" name="listWidget_Participants">
         <property name="styleSheet">
          <string notr="true">border: 1px solid rgb(0, 0, 190)</string>
         </property>

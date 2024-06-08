@@ -188,13 +188,14 @@ void Server::createNewChat(QStringList usernames, QString chatname)
     query.exec();
 
     qDebug() << "Chat (Id_Chat = " << query.lastInsertId().toInt() << ") created";
+
+    GetChats();
 }
 
 //Отправка списка чатов клиенту
 void Server::GetChats()
 {
     int current_id = Clients[socket].Id_User; //Id пользователя от которого поступил запрос
-    //QStringList chats;
     QMap<uint, QString> chatsmap;
     QSqlQuery query;
     query.exec("SELECT * FROM Chats"); //Получаем список всех чатов
@@ -234,12 +235,10 @@ void Server::GetChats()
                 query.exec();
                 secondusername =  query.value(0).toString();
             }
-            //chats << secondusername;
             chatsmap[idchat] = secondusername;
         }
         else
         {
-            //chats << chatname;
             chatsmap[idchat] = chatname;
         }
     }
@@ -283,6 +282,41 @@ void Server::getChatParticipants(int chatId)
 
         qDebug() << "Sending chat participants to the user (Id_User = " << Clients[socket].Id_User << ") is done";
     }
+}
+
+//Определение и отправка типа чата (по Id) клиенту
+void Server::chatType(int chatId)
+{
+    QSqlQuery query;
+    //Получаем чат из БД
+    query.prepare("SELECT * FROM Chats WHERE Id_Chats = :chatId");
+    query.bindValue(":chatId", chatId);
+    query.exec();
+    if(query.next())
+    {
+        QString chatname = query.value("Chat_Name").toString();
+        QString participants = query.value("Ids_Participants").toString();
+        QStringList participantsList = participants.split(' ');
+        if(chatname.isEmpty() && participantsList.size() == 2)
+        {
+            Data.clear();
+            QDataStream out(&Data, QIODevice::WriteOnly);
+            out.setVersion(QDataStream::Qt_6_2);
+            out << SignalType::IsPrivateChat;
+            socket->write(Data);
+        }
+        else
+        {
+            Data.clear();
+            QDataStream out(&Data, QIODevice::WriteOnly);
+            out.setVersion(QDataStream::Qt_6_2);
+            out << SignalType::IsGroupChat;
+            socket->write(Data);
+        }
+
+        qDebug() << "Sending chat type to the user (Id_User = " << Clients[socket].Id_User << ") is done";
+    }
+
 }
 
 void Server::slotReadyRead()
@@ -344,6 +378,13 @@ void Server::slotReadyRead()
             int chatId;
             in >> chatId;
             getChatParticipants(chatId);
+            break;
+        }
+        case SignalType::ChatType:
+        {
+            int chatId;
+            in >> chatId;
+            chatType(chatId);
             break;
         }
         }

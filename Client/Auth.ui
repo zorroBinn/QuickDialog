@@ -56,7 +56,7 @@
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="focusPolicy">
-     <enum>Qt::ClickFocus</enum>
+     <enum>Qt::NoFocus</enum>
     </property>
     <property name="toolTip">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вход в аккаунт с введёнными учётными данными&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -84,7 +84,7 @@ font: 14pt &quot;Comic Sans MS&quot;;</string>
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="focusPolicy">
-     <enum>Qt::ClickFocus</enum>
+     <enum>Qt::NoFocus</enum>
     </property>
     <property name="toolTip">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Регистрация нового аккаунта по введённым учётным данным&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

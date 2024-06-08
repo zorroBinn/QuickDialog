@@ -108,6 +108,9 @@ font: italic 14pt &quot;Comic Sans MS&quot;;</string>
         </item>
         <item>
          <widget class="QListWidget" name="listWidget_AllUsers">
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="styleSheet">
            <string notr="true">border: 1px solid rgb(0, 0, 190)</string>
           </property>
@@ -125,7 +128,7 @@ font: italic 14pt &quot;Comic Sans MS&quot;;</string>
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">font: italic 24pt &quot;Comic Sans MS&quot;;

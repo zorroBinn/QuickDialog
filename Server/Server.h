@@ -34,6 +34,7 @@ private:
     void createNewChat(QStringList usernames, QString chatname);
     void GetChats();
     void getChatParticipants(int chatId);
+    void chatType(int chatId);
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

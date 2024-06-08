@@ -17,6 +17,8 @@ NewChat::~NewChat()
 //Получение списка пользователей (кроме текущего)
 void NewChat::GetUsersList(QStringList users)
 {
+    ui->listWidget_AllUsers->clear();
+    UserCheckStates.clear();
     //Создаём новые checkable элементы в QlistWidget
     foreach (const QString &user, users) {
         QListWidgetItem *newitem = new QListWidgetItem(user);
@@ -25,8 +27,6 @@ void NewChat::GetUsersList(QStringList users)
         ui->listWidget_AllUsers->addItem(newitem);
         UserCheckStates[user] = Qt::Unchecked;
     }
-    ui->lineEdit_Search->setText(" ");
-    ui->lineEdit_Search->setText("");
 }
 
 //Создание нового чата
@@ -36,7 +36,7 @@ void NewChat::on_pushButton_CreateChat_clicked()
     {
         QStringList selectedusers; //Отмеченные пользователи
         ui->lineEdit_Search->setText("");
-        for(int i = 0; i < ui->listWidget_AllUsers->count(); ++i) {
+        for(int i = 0; i < ui->listWidget_AllUsers->count(); i++) {
             QListWidgetItem *item = ui->listWidget_AllUsers->item(i);
             if(item->checkState() == Qt::Checked) {
                 selectedusers << item->text();
@@ -58,8 +58,8 @@ void NewChat::on_pushButton_CreateChat_clicked()
 //Поиск пользователей
 void NewChat::on_lineEdit_Search_textChanged(const QString &arg1)
 {
-    // Сохранение текущих состояний флажков
-    for(int i = 0; i < ui->listWidget_AllUsers->count(); ++i) {
+    //Сохранение текущих состояний флажков
+    for(int i = 0; i < ui->listWidget_AllUsers->count(); i++) {
         QListWidgetItem *item = ui->listWidget_AllUsers->item(i);
         UserCheckStates[item->text()] = item->checkState();
     }
@@ -67,11 +67,11 @@ void NewChat::on_lineEdit_Search_textChanged(const QString &arg1)
     //Поиск среди пользователей, включающих в username строку из lineEdit_Search
     for(auto it = UserCheckStates.begin(); it != UserCheckStates.end(); ++it) {
         const QString &user = it.key();
-        // Если имя пользователя содержит введенный текст, добавляем его в список
+        //Если имя пользователя содержит введенный текст, добавляем его в список
         if (user.contains(arg1, Qt::CaseInsensitive)) {
             QListWidgetItem *newitem = new QListWidgetItem(user);
             newitem->setFlags(newitem->flags() | Qt::ItemIsUserCheckable);
-            newitem->setCheckState(it.value()); // Восстановлено
+            newitem->setCheckState(it.value());
             ui->listWidget_AllUsers->addItem(newitem);
         }
     }

@@ -41,6 +41,7 @@ private:
     void GetChats();
     void getChatParticipants(int chatId);
     void showUsersInChatList(QStringList users);
+    void chatType(int chatId);
 
 public slots:
     void slotReadyRead();
@@ -59,7 +60,8 @@ private slots:
 
 signals:
     void AuthError(); //Сигнал ошибки аутентификации
-    void allUsers(QStringList users); //Сигнал для отправки списка пользователей в окно создания нового чата
-    void chatParticipants(QStringList partisipants, QString currentchatname);
+    void allUsersForNewChat(QStringList users); //Сигнал для отправки списка пользователей в окно создания нового чата
+    void allUsersForNewParticipants(QStringList users); //Сигнал для отправки списка пользователей в окно добавления пользователей в групповые чаты
+    void chatParticipants(QStringList partisipants, QString currentchatname, int chatId); //Сигнал для отпрвки списка участников чата в окно добавления пользователей в групповые чаты
 };
 #endif // MAINWINDOW_H

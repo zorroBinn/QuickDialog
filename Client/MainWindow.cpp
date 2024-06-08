@@ -17,13 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
     authform->show();
     connect(authform, &Auth::registerUser, this, &MainWindow::registerUser);
     connect(authform, &Auth::authUser, this, &MainWindow::authUser);
+    connect(this, &MainWindow::AuthError, authform, &Auth::AuthError);
 
     newChat = new NewChat(); //Окно создания нового чата
     connect(newChat, &NewChat::thisClosed, this, &MainWindow::newChatDestroyed);
     connect(newChat, &NewChat::createNewChat, this, &MainWindow::createNewChat);
+    connect(this, &MainWindow::allUsersForNewChat, newChat, &NewChat::GetUsersList);
 
-    addUserToChat = new AddUserToChat();
+    addUserToChat = new AddUserToChat(); //Окно добавления в групповой чат новых участников
     connect(addUserToChat, &AddUserToChat::thisClosed, this, &MainWindow::addUserToChatDestroyed);
+    connect(this, &MainWindow::allUsersForNewParticipants, addUserToChat, &AddUserToChat::getUsersList);
+    connect(this, &MainWindow::chatParticipants, addUserToChat, &AddUserToChat::getParticipantsList);
 
     ui->pushButton_Chat_NewUser->setVisible(false);
 }
@@ -84,7 +88,7 @@ void MainWindow::showUsersInChatList(QStringList users)
         ui->listWidget_Chats->clear();
         currentChatId = 0;
         currentChatName = "";
-        ui->label_CurrentChatName->setVisible(false);
+        ui->label_CurrentChatName->setText("");
         foreach (const QString &user, users) {
             if (!user.contains(searchKey, Qt::CaseInsensitive)) continue;
             QListWidgetItem *newitem = new QListWidgetItem(user);
@@ -93,7 +97,16 @@ void MainWindow::showUsersInChatList(QStringList users)
     }
 }
 
-//Получение информации от сервера и  распознавание его типа
+void MainWindow::chatType(int chatId)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::ChatType << chatId;
+    socket->write(Data);
+}
+
+//Получение информации от сервера и типа сообщения с дальнейшим ходом действий
 void MainWindow::slotReadyRead()
 {
     QDataStream in(socket);
@@ -114,7 +127,6 @@ void MainWindow::slotReadyRead()
         }
         case ClientSignalType::AuthError:
         {
-            connect(this, &MainWindow::AuthError, authform, &Auth::AuthError);
             emit AuthError();
             break;
         }
@@ -124,8 +136,8 @@ void MainWindow::slotReadyRead()
             in >> users;
             if(!isThisActive)
             {
-                connect(this, &MainWindow::allUsers, newChat, &NewChat::GetUsersList);
-                emit allUsers(users);
+                if(!newChat->isHidden()) emit allUsersForNewChat(users);
+                else if(!addUserToChat->isHidden()) emit allUsersForNewParticipants(users);
             }
             else
             {
@@ -135,8 +147,11 @@ void MainWindow::slotReadyRead()
         }
         case ClientSignalType::GetChats:
         {
+            chats.clear();
             in >> chats;
             ui->listWidget_Chats->clear();
+            ui->lineEdit_Search->clear();
+            searchKey = "";
             foreach (const QString &chatname, chats) {
                 ui->listWidget_Chats->addItem(new QListWidgetItem(chatname));
             }
@@ -148,9 +163,18 @@ void MainWindow::slotReadyRead()
             in >> participants;
             if(!isThisActive)
             {
-                connect(this, &MainWindow::chatParticipants, addUserToChat, &AddUserToChat::getParticipantsList);
-                emit chatParticipants(participants, currentChatName);
+                emit chatParticipants(participants, currentChatName, currentChatId);
             }
+            break;
+        }
+        case ClientSignalType::IsPrivateChat:
+        {
+            ui->pushButton_Chat_NewUser->setVisible(false);
+            break;
+        }
+        case ClientSignalType::IsGroupChat:
+        {
+            ui->pushButton_Chat_NewUser->setVisible(true);
             break;
         }
         }
@@ -192,8 +216,6 @@ void MainWindow::newChatDestroyed()
 {
     this->setDisabled(false);
     isThisActive = true;
-    //ui->lineEdit_Search->setText("");
-    //on_lineEdit_Search_textEdited("");
 }
 
 //При закрытии окна добавления пользователя в чат - сделать основное окно активным
@@ -201,14 +223,12 @@ void MainWindow::addUserToChatDestroyed()
 {
     this->setDisabled(false);
     isThisActive = true;
-    //ui->lineEdit_Search->setText("");
-    //on_lineEdit_Search_textEdited("");
 }
 
 
 void MainWindow::on_pushButton_Send_clicked()
 {
-    if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text().trimmed());
+    if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text());
 }
 
 
@@ -221,19 +241,16 @@ void MainWindow::on_lineEdit_Mess_returnPressed()
 void MainWindow::on_pushButton_Chat_NewUser_clicked()
 {
     isThisActive = false;
-    ui->lineEdit_Search->setText("");
-    searchKey = "";
     addUserToChat->show();
     this->setDisabled(true);
     getChatParticipants(currentChatId);
+    GetAllUsers();
 }
 
 
 void MainWindow::on_pushButton_NewChat_clicked()
 {
     isThisActive = false;
-    ui->lineEdit_Search->setText("");
-    searchKey = "";
     newChat->show();
     this->setDisabled(true);
     GetAllUsers();

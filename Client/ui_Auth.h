@@ -53,7 +53,7 @@ public:
         pushButton_Auth->setObjectName("pushButton_Auth");
         pushButton_Auth->setGeometry(QRect(100, 320, 131, 41));
         pushButton_Auth->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_Auth->setFocusPolicy(Qt::ClickFocus);
+        pushButton_Auth->setFocusPolicy(Qt::NoFocus);
         pushButton_Auth->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
 "border: 1px solid rgb(0, 0, 127);\n"
 "color: rgb(237, 253, 255);\n"
@@ -62,7 +62,7 @@ public:
         pushButton_Registr->setObjectName("pushButton_Registr");
         pushButton_Registr->setGeometry(QRect(380, 320, 131, 41));
         pushButton_Registr->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_Registr->setFocusPolicy(Qt::ClickFocus);
+        pushButton_Registr->setFocusPolicy(Qt::NoFocus);
         pushButton_Registr->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(34, 0, 52, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
 "border: 1px solid rgb(0, 0, 127);\n"
 "color: rgb(237, 253, 255);\n"

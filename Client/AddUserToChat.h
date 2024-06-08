@@ -18,7 +18,7 @@ public:
 
 public slots:
     void getUsersList(QStringList users);
-    void getParticipantsList(QStringList participants, QString chatname);
+    void getParticipantsList(QStringList participants, QString chatname, int chatId);
 
 private slots:
     void on_pushButton_AddUsers_clicked();
@@ -28,10 +28,12 @@ private slots:
 private:
     Ui::AddUserToChat *ui;
     QString currentChatName;
-    QMap<QString, Qt::CheckState> newUserCheckStates; //Хранит пары “имя пользователя - состояние флажка”
+    int currentChatId;
+    QStringList participants;
+    QMap<QString, Qt::CheckState> newChatUsersCheckStates; //Хранит пары “имя пользователя - состояние флажка”
 
 signals:
-    void addUser(const QStringList users, const QString chatname);
+    void addUser(const QStringList users, int chatId);
     void thisClosed();
 };
 

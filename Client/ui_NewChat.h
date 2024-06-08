@@ -87,6 +87,7 @@ public:
 
         listWidget_AllUsers = new QListWidget(groupBox_AddUsers);
         listWidget_AllUsers->setObjectName("listWidget_AllUsers");
+        listWidget_AllUsers->setFocusPolicy(Qt::NoFocus);
         listWidget_AllUsers->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 190)"));
         listWidget_AllUsers->setSortingEnabled(true);
 
@@ -98,7 +99,7 @@ public:
         pushButton_CreateChat = new QPushButton(NewChat);
         pushButton_CreateChat->setObjectName("pushButton_CreateChat");
         pushButton_CreateChat->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_CreateChat->setFocusPolicy(Qt::ClickFocus);
+        pushButton_CreateChat->setFocusPolicy(Qt::NoFocus);
         pushButton_CreateChat->setStyleSheet(QString::fromUtf8("font: italic 24pt \"Comic Sans MS\";\n"
 "color: rgb(234, 253, 255);\n"
 "background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(24, 0, 36, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"

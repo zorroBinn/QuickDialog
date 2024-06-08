@@ -247,6 +247,7 @@ release/moc_Server.cpp: Server.h \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/QSqlError \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlerror.h \
+		SignalType.h \
 		release/moc_predefs.h \
 		C:/Qt/6.7.1/mingw_64/bin/moc.exe
 	C:\Qt\6.7.1\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/zorro/Documents/QuickDialog/Server/release/moc_predefs.h -IC:/Qt/6.7.1/mingw_64/mkspecs/win32-g++ -IC:/Users/zorro/Documents/QuickDialog/Server -IC:/Qt/6.7.1/mingw_64/include -IC:/Qt/6.7.1/mingw_64/include/QtNetwork -IC:/Qt/6.7.1/mingw_64/include/QtSql -IC:/Qt/6.7.1/mingw_64/include/QtCore -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include Server.h -o release\moc_Server.cpp
@@ -404,7 +405,8 @@ release/Server.o: Server.cpp Server.h \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/QSqlQuery \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/QSqlError \
-		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlerror.h
+		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlerror.h \
+		SignalType.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Server.o Server.cpp
 
 release/main.o: main.cpp C:/Qt/6.7.1/mingw_64/include/QtCore/QCoreApplication \
@@ -562,7 +564,8 @@ release/main.o: main.cpp C:/Qt/6.7.1/mingw_64/include/QtCore/QCoreApplication \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/QSqlQuery \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.7.1/mingw_64/include/QtSql/QSqlError \
-		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlerror.h
+		C:/Qt/6.7.1/mingw_64/include/QtSql/qsqlerror.h \
+		SignalType.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o main.cpp
 
 release/moc_Server.o: release/moc_Server.cpp 

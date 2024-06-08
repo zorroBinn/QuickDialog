@@ -40,17 +40,17 @@ public:
     QListWidget *listWidget_Chats;
     QGroupBox *groupBox_Chat;
     QGridLayout *gridLayout;
-    QPushButton *pushButton_Chat_NewUser;
+    QLineEdit *lineEdit_Mess;
     QPushButton *pushButton_Send;
     QTextBrowser *textBrowser_CurrentChat;
-    QLineEdit *lineEdit_Mess;
     QLabel *label_CurrentChatName;
+    QPushButton *pushButton_Chat_NewUser;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1075, 747);
+        MainWindow->resize(1138, 734);
         MainWindow->setMinimumSize(QSize(750, 400));
         MainWindow->setCursor(QCursor(Qt::ArrowCursor));
         QIcon icon(QIcon::fromTheme(QString::fromUtf8("contact-new")));
@@ -72,7 +72,7 @@ public:
         pushButton_NewChat->setMinimumSize(QSize(50, 50));
         pushButton_NewChat->setMaximumSize(QSize(50, 50));
         pushButton_NewChat->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_NewChat->setFocusPolicy(Qt::ClickFocus);
+        pushButton_NewChat->setFocusPolicy(Qt::NoFocus);
         pushButton_NewChat->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.488636 rgba(80, 0, 122, 255), stop:0.806818 rgba(44, 18, 97, 255));\n"
 "font: 700 40pt \"Times New Roman\";\n"
 "color: rgb(198, 255, 255);\n"
@@ -97,6 +97,7 @@ public:
 
         listWidget_Chats = new QListWidget(centralwidget);
         listWidget_Chats->setObjectName("listWidget_Chats");
+        listWidget_Chats->setFocusPolicy(Qt::NoFocus);
         listWidget_Chats->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(24, 0, 36, 255), stop:0.312849 rgba(38, 8, 72, 255), stop:0.731844 rgba(44, 18, 97, 255), stop:1 rgba(50, 29, 125, 255));\n"
 "color: rgb(238, 255, 246);\n"
 "font: 700 24pt \"Comic Sans MS\";"));
@@ -112,42 +113,6 @@ public:
 "border: 0px"));
         gridLayout = new QGridLayout(groupBox_Chat);
         gridLayout->setObjectName("gridLayout");
-        pushButton_Chat_NewUser = new QPushButton(groupBox_Chat);
-        pushButton_Chat_NewUser->setObjectName("pushButton_Chat_NewUser");
-        pushButton_Chat_NewUser->setMinimumSize(QSize(200, 35));
-        pushButton_Chat_NewUser->setMaximumSize(QSize(200, 35));
-        pushButton_Chat_NewUser->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_Chat_NewUser->setFocusPolicy(Qt::ClickFocus);
-        pushButton_Chat_NewUser->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 80);\n"
-"font: 700 16pt \"Times New Roman\";\n"
-"color: rgb(198, 255, 255);\n"
-"border: 1px solid rgb(0, 0, 190);"));
-
-        gridLayout->addWidget(pushButton_Chat_NewUser, 1, 1, 1, 1);
-
-        pushButton_Send = new QPushButton(groupBox_Chat);
-        pushButton_Send->setObjectName("pushButton_Send");
-        pushButton_Send->setMinimumSize(QSize(50, 50));
-        pushButton_Send->setMaximumSize(QSize(50, 50));
-        pushButton_Send->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_Send->setFocusPolicy(Qt::ClickFocus);
-        pushButton_Send->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.488636 rgba(80, 0, 122, 255), stop:0.806818 rgba(44, 18, 97, 255));\n"
-"font: 700 40pt \"Times New Roman\";\n"
-"color: rgb(198, 255, 255);\n"
-"border: 2px solid rgb(0, 255, 255);"));
-
-        gridLayout->addWidget(pushButton_Send, 3, 2, 1, 1);
-
-        textBrowser_CurrentChat = new QTextBrowser(groupBox_Chat);
-        textBrowser_CurrentChat->setObjectName("textBrowser_CurrentChat");
-        textBrowser_CurrentChat->setFocusPolicy(Qt::NoFocus);
-        textBrowser_CurrentChat->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 60);\n"
-"color: rgb(239, 253, 255);\n"
-"font: 700 18pt \"Comic Sans MS\";\n"
-"border: 0px"));
-
-        gridLayout->addWidget(textBrowser_CurrentChat, 2, 0, 1, 3);
-
         lineEdit_Mess = new QLineEdit(groupBox_Chat);
         lineEdit_Mess->setObjectName("lineEdit_Mess");
         lineEdit_Mess->setMinimumSize(QSize(0, 50));
@@ -162,16 +127,52 @@ public:
 "border-right: 0px;\n"
 ""));
 
-        gridLayout->addWidget(lineEdit_Mess, 3, 0, 1, 2);
+        gridLayout->addWidget(lineEdit_Mess, 2, 0, 1, 2);
+
+        pushButton_Send = new QPushButton(groupBox_Chat);
+        pushButton_Send->setObjectName("pushButton_Send");
+        pushButton_Send->setMinimumSize(QSize(50, 50));
+        pushButton_Send->setMaximumSize(QSize(50, 50));
+        pushButton_Send->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_Send->setFocusPolicy(Qt::NoFocus);
+        pushButton_Send->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0.488636 rgba(80, 0, 122, 255), stop:0.806818 rgba(44, 18, 97, 255));\n"
+"font: 700 40pt \"Times New Roman\";\n"
+"color: rgb(198, 255, 255);\n"
+"border: 2px solid rgb(0, 255, 255);"));
+
+        gridLayout->addWidget(pushButton_Send, 2, 2, 1, 1);
+
+        textBrowser_CurrentChat = new QTextBrowser(groupBox_Chat);
+        textBrowser_CurrentChat->setObjectName("textBrowser_CurrentChat");
+        textBrowser_CurrentChat->setFocusPolicy(Qt::NoFocus);
+        textBrowser_CurrentChat->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 60);\n"
+"color: rgb(239, 253, 255);\n"
+"font: 700 18pt \"Comic Sans MS\";\n"
+"border: 0px"));
+
+        gridLayout->addWidget(textBrowser_CurrentChat, 1, 0, 1, 3);
 
         label_CurrentChatName = new QLabel(groupBox_Chat);
         label_CurrentChatName->setObjectName("label_CurrentChatName");
-        label_CurrentChatName->setMinimumSize(QSize(460, 35));
-        label_CurrentChatName->setMaximumSize(QSize(460, 35));
+        label_CurrentChatName->setMinimumSize(QSize(371, 35));
+        label_CurrentChatName->setMaximumSize(QSize(16777215, 35));
         label_CurrentChatName->setStyleSheet(QString::fromUtf8("color: rgb(238, 255, 246);\n"
 "font: 700 20pt \"Comic Sans MS\";"));
 
-        gridLayout->addWidget(label_CurrentChatName, 1, 0, 1, 1);
+        gridLayout->addWidget(label_CurrentChatName, 0, 0, 1, 1);
+
+        pushButton_Chat_NewUser = new QPushButton(groupBox_Chat);
+        pushButton_Chat_NewUser->setObjectName("pushButton_Chat_NewUser");
+        pushButton_Chat_NewUser->setMinimumSize(QSize(200, 35));
+        pushButton_Chat_NewUser->setMaximumSize(QSize(200, 35));
+        pushButton_Chat_NewUser->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_Chat_NewUser->setFocusPolicy(Qt::NoFocus);
+        pushButton_Chat_NewUser->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 80);\n"
+"font: 700 16pt \"Times New Roman\";\n"
+"color: rgb(198, 255, 255);\n"
+"border: 1px solid rgb(0, 0, 190);"));
+
+        gridLayout->addWidget(pushButton_Chat_NewUser, 0, 1, 1, 1);
 
 
         formLayout->setWidget(0, QFormLayout::FieldRole, groupBox_Chat);
@@ -198,13 +199,13 @@ public:
 #endif // QT_CONFIG(tooltip)
         lineEdit_Search->setPlaceholderText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\270\321\201\320\272 \320\277\320\276 \320\270\320\274\320\265\320\275\320\270", nullptr));
         groupBox_Chat->setTitle(QString());
+        lineEdit_Mess->setPlaceholderText(QCoreApplication::translate("MainWindow", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \321\201\320\262\320\276\321\221 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265", nullptr));
+        pushButton_Send->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
+        label_CurrentChatName->setText(QString());
 #if QT_CONFIG(tooltip)
         pushButton_Chat_NewUser->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\203\321\207\320\260\321\201\321\202\320\275\320\270\320\272\320\260 \320\262 \320\263\321\200\321\203\320\277\320\277\320\276\320\262\320\276\320\271 \321\207\320\260\321\202</span></p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
         pushButton_Chat_NewUser->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \321\203\321\207\320\260\321\201\321\202\320\275\320\270\320\272\320\260", nullptr));
-        pushButton_Send->setText(QCoreApplication::translate("MainWindow", ">", nullptr));
-        lineEdit_Mess->setPlaceholderText(QCoreApplication::translate("MainWindow", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \321\201\320\262\320\276\321\221 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\265", nullptr));
-        label_CurrentChatName->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

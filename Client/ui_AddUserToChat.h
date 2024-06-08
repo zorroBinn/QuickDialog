@@ -32,7 +32,7 @@ public:
     QGroupBox *groupBox_Participants;
     QGridLayout *gridLayout;
     QSpacerItem *verticalSpacer;
-    QListWidget *listWidget;
+    QListWidget *listWidget_Participants;
     QGroupBox *groupBox_AddUser;
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer_2;
@@ -76,11 +76,11 @@ public:
 
         gridLayout->addItem(verticalSpacer, 0, 0, 1, 1);
 
-        listWidget = new QListWidget(groupBox_Participants);
-        listWidget->setObjectName("listWidget");
-        listWidget->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 190)"));
+        listWidget_Participants = new QListWidget(groupBox_Participants);
+        listWidget_Participants->setObjectName("listWidget_Participants");
+        listWidget_Participants->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(0, 0, 190)"));
 
-        gridLayout->addWidget(listWidget, 1, 0, 1, 1);
+        gridLayout->addWidget(listWidget_Participants, 1, 0, 1, 1);
 
 
         verticalLayout_2->addWidget(groupBox_Participants);
