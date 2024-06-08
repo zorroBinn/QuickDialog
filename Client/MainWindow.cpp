@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-    socket->connectToHost("192.168.67.65", 2024);
+    socket->connectToHost("192.168.1.103", 2024);
 
     authform = new Auth(); //Окно авторизации
     authform->show();
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     addUserToChat = new AddUserToChat();
     connect(addUserToChat, &AddUserToChat::thisClosed, this, &MainWindow::addUserToChatDestroyed);
 
-    //ui->pushButton_Chat_NewUser->setVisible(false);
+    ui->pushButton_Chat_NewUser->setVisible(false);
 }
 
 //Деструктор
@@ -67,13 +67,30 @@ void MainWindow::GetChats()
 }
 
 //Запрос на получение списка пользователей текущего чата
-void MainWindow::getChatParticipants(uint chatId)
+void MainWindow::getChatParticipants(int chatId)
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
     out << ClientSignalType::GetChatParticipants << chatId;
     socket->write(Data);
+}
+
+//Получает список всех пользователей содержащих в username строку из поиска контактов
+void MainWindow::showUsersInChatList(QStringList users)
+{
+    if(searchKey != "")
+    {
+        ui->listWidget_Chats->clear();
+        currentChatId = 0;
+        currentChatName = "";
+        ui->label_CurrentChatName->setVisible(false);
+        foreach (const QString &user, users) {
+            if (!user.contains(searchKey, Qt::CaseInsensitive)) continue;
+            QListWidgetItem *newitem = new QListWidgetItem(user);
+            ui->listWidget_Chats->addItem(newitem);
+        }
+    }
 }
 
 //Получение информации от сервера и  распознавание его типа
@@ -105,16 +122,19 @@ void MainWindow::slotReadyRead()
         {
             QStringList users;
             in >> users;
-            if(!newChat->isHidden())
+            if(!isThisActive)
             {
                 connect(this, &MainWindow::allUsers, newChat, &NewChat::GetUsersList);
                 emit allUsers(users);
+            }
+            else
+            {
+                showUsersInChatList(users);
             }
             break;
         }
         case ClientSignalType::GetChats:
         {
-            //QStringList chats;
             in >> chats;
             ui->listWidget_Chats->clear();
             foreach (const QString &chatname, chats) {
@@ -126,7 +146,7 @@ void MainWindow::slotReadyRead()
         {
             QStringList participants;
             in >> participants;
-            if(!addUserToChat->isHidden())
+            if(!isThisActive)
             {
                 connect(this, &MainWindow::chatParticipants, addUserToChat, &AddUserToChat::getParticipantsList);
                 emit chatParticipants(participants, currentChatName);
@@ -171,26 +191,24 @@ void MainWindow::createNewChat(QStringList users, const QString &chatname)
 void MainWindow::newChatDestroyed()
 {
     this->setDisabled(false);
-    GetChats();
+    isThisActive = true;
+    //ui->lineEdit_Search->setText("");
+    //on_lineEdit_Search_textEdited("");
 }
 
 //При закрытии окна добавления пользователя в чат - сделать основное окно активным
 void MainWindow::addUserToChatDestroyed()
 {
     this->setDisabled(false);
-    GetChats();
+    isThisActive = true;
+    //ui->lineEdit_Search->setText("");
+    //on_lineEdit_Search_textEdited("");
 }
 
 
 void MainWindow::on_pushButton_Send_clicked()
 {
     if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text().trimmed());
-}
-
-
-void MainWindow::on_lineEdit_Search_returnPressed()
-{
-
 }
 
 
@@ -202,6 +220,9 @@ void MainWindow::on_lineEdit_Mess_returnPressed()
 
 void MainWindow::on_pushButton_Chat_NewUser_clicked()
 {
+    isThisActive = false;
+    ui->lineEdit_Search->setText("");
+    searchKey = "";
     addUserToChat->show();
     this->setDisabled(true);
     getChatParticipants(currentChatId);
@@ -210,8 +231,26 @@ void MainWindow::on_pushButton_Chat_NewUser_clicked()
 
 void MainWindow::on_pushButton_NewChat_clicked()
 {
+    isThisActive = false;
+    ui->lineEdit_Search->setText("");
+    searchKey = "";
     newChat->show();
     this->setDisabled(true);
     GetAllUsers();
+}
+
+
+void MainWindow::on_lineEdit_Search_textEdited(const QString &arg1)
+{
+    if(ui->lineEdit_Search->text().trimmed() != "")
+    {
+        searchKey = arg1.trimmed();
+        GetAllUsers();
+    }
+    else if(ui->lineEdit_Search->text() == "")
+    {
+        searchKey = "";
+        GetChats();
+    }
 }
 

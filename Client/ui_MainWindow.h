@@ -152,6 +152,7 @@ public:
         lineEdit_Mess->setObjectName("lineEdit_Mess");
         lineEdit_Mess->setMinimumSize(QSize(0, 50));
         lineEdit_Mess->setMaximumSize(QSize(16777215, 50));
+        lineEdit_Mess->setFocusPolicy(Qt::StrongFocus);
         lineEdit_Mess->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 65);\n"
 "font: 700 24pt \"Comic Sans MS\";\n"
 "color: rgb(242, 255, 244);\n"

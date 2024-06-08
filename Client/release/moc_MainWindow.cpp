@@ -51,12 +51,13 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "createNewChat",
     "chatname",
     "on_pushButton_Send_clicked",
-    "on_lineEdit_Search_returnPressed",
     "on_lineEdit_Mess_returnPressed",
     "on_pushButton_Chat_NewUser_clicked",
     "on_pushButton_NewChat_clicked",
     "newChatDestroyed",
-    "addUserToChatDestroyed"
+    "addUserToChatDestroyed",
+    "on_lineEdit_Search_textEdited",
+    "arg1"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -92,7 +93,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       18,    0,  126,    2, 0x08,   20 /* Private */,
       19,    0,  127,    2, 0x08,   21 /* Private */,
       20,    0,  128,    2, 0x08,   22 /* Private */,
-      21,    0,  129,    2, 0x08,   23 /* Private */,
+      21,    1,  129,    2, 0x08,   23 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -110,7 +111,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   22,
 
        0        // eod
 };
@@ -149,8 +150,6 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
         // method 'on_pushButton_Send_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_lineEdit_Search_returnPressed'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_lineEdit_Mess_returnPressed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_Chat_NewUser_clicked'
@@ -160,7 +159,10 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'newChatDestroyed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'addUserToChatDestroyed'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_lineEdit_Search_textEdited'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
     >,
     nullptr
 } };
@@ -179,12 +181,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 5: _t->authUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 6: _t->createNewChat((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 7: _t->on_pushButton_Send_clicked(); break;
-        case 8: _t->on_lineEdit_Search_returnPressed(); break;
-        case 9: _t->on_lineEdit_Mess_returnPressed(); break;
-        case 10: _t->on_pushButton_Chat_NewUser_clicked(); break;
-        case 11: _t->on_pushButton_NewChat_clicked(); break;
-        case 12: _t->newChatDestroyed(); break;
-        case 13: _t->addUserToChatDestroyed(); break;
+        case 8: _t->on_lineEdit_Mess_returnPressed(); break;
+        case 9: _t->on_pushButton_Chat_NewUser_clicked(); break;
+        case 10: _t->on_pushButton_NewChat_clicked(); break;
+        case 11: _t->newChatDestroyed(); break;
+        case 12: _t->addUserToChatDestroyed(); break;
+        case 13: _t->on_lineEdit_Search_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

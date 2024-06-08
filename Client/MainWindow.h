@@ -31,13 +31,16 @@ private:
     Auth *authform;
     NewChat *newChat;
     AddUserToChat *addUserToChat;
-    QMap<uint, QString> chats;
-    uint currentChatId;
+    QMap<int, QString> chats;
+    int currentChatId;
     QString currentChatName;
+    QString searchKey;
+    bool isThisActive = true;
     void SendToServer(QString str);
     void GetAllUsers();
     void GetChats();
-    void getChatParticipants(uint chatId);
+    void getChatParticipants(int chatId);
+    void showUsersInChatList(QStringList users);
 
 public slots:
     void slotReadyRead();
@@ -47,12 +50,12 @@ public slots:
 
 private slots:
     void on_pushButton_Send_clicked();
-    void on_lineEdit_Search_returnPressed();
     void on_lineEdit_Mess_returnPressed();
     void on_pushButton_Chat_NewUser_clicked();
     void on_pushButton_NewChat_clicked();
     void newChatDestroyed();
     void addUserToChatDestroyed();
+    void on_lineEdit_Search_textEdited(const QString &arg1);
 
 signals:
     void AuthError(); //Сигнал ошибки аутентификации

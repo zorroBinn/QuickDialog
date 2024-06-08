@@ -254,33 +254,35 @@ void Server::GetChats()
 }
 
 //Отправка списка участников чата клиенту
-void Server::getChatParticipants(uint chatId)
+void Server::getChatParticipants(int chatId)
 {
     QSqlQuery query;
     //Получаем список Id участников чата из БД
     query.prepare("SELECT Ids_Participants FROM Chats WHERE Chat_Id = :chatId");
     query.bindValue(":chatname", chatId);
     query.exec();
-    query.next();
-    QString participants = query.value(0).toString();
-    QStringList participantsIdList = participants.split(' ');
-    QStringList participantsList;
-    //Получаем username каждого участника
-    foreach (const QString id, participantsIdList) {
-        query.prepare("SELECT Username FROm Users WHERE Id_User = :id");
-        query.bindValue(":id", id.toInt());
-        query.exec();
-        query.next();
-        participantsList << query.value(0).toString();
-    }
-    //Отправляем на клиент пользователю список всех участников чата
-    Data.clear();
-    QDataStream out(&Data, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_6_2);
-    out << SignalType::GetChatParticipants << participantsList;
-    socket->write(Data);
+    if(query.next())
+    {
+        QString participants = query.value(0).toString();
+        QStringList participantsIdList = participants.split(' ');
+        QStringList participantsList;
+        //Получаем username каждого участника
+        foreach (const QString id, participantsIdList) {
+            query.prepare("SELECT Username FROm Users WHERE Id_User = :id");
+            query.bindValue(":id", id.toInt());
+            query.exec();
+            query.next();
+            participantsList << query.value(0).toString();
+        }
+        //Отправляем на клиент пользователю список всех участников чата
+        Data.clear();
+        QDataStream out(&Data, QIODevice::WriteOnly);
+        out.setVersion(QDataStream::Qt_6_2);
+        out << SignalType::GetChatParticipants << participantsList;
+        socket->write(Data);
 
-    qDebug() << "Sending chat participants to the user (Id_User = " << Clients[socket].Id_User << ") is done";
+        qDebug() << "Sending chat participants to the user (Id_User = " << Clients[socket].Id_User << ") is done";
+    }
 }
 
 void Server::slotReadyRead()
@@ -339,7 +341,7 @@ void Server::slotReadyRead()
         }
         case SignalType::GetChatParticipants:
         {
-            uint chatId;
+            int chatId;
             in >> chatId;
             getChatParticipants(chatId);
             break;
