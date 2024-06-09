@@ -120,6 +120,16 @@ void MainWindow::addUsersToChat(QStringList users, int chatId)
     socket->write(Data);
 }
 
+//Запрос на получение истории чата
+void MainWindow::getChatStory(int chatId)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::GetChatStory << chatId;
+    socket->write(Data);
+}
+
 //Получение информации от сервера и типа сообщения с дальнейшим ходом действий
 void MainWindow::slotReadyRead()
 {
@@ -189,6 +199,21 @@ void MainWindow::slotReadyRead()
         case ClientSignalType::IsGroupChat:
         {
             ui->pushButton_Chat_NewUser->setVisible(true);
+            break;
+        }
+        case ClientSignalType::GetChatStory:
+        {
+            QStringList chatStory;
+            int chatId;
+            in >> chatStory;
+            in >> chatId;
+            if(currentChatId == chatId)
+            {
+                ui->textBrowser_CurrentChat->clear();
+                foreach (const QString &message, chatStory) {
+                    ui->textBrowser_CurrentChat->append(message);
+                }
+            }
             break;
         }
         }
@@ -282,6 +307,30 @@ void MainWindow::on_lineEdit_Search_textEdited(const QString &arg1)
     {
         searchKey = "";
         GetChats();
+    }
+}
+
+
+void MainWindow::on_listWidget_Chats_itemClicked(QListWidgetItem *item)
+{
+    int currentChatIndex = ui->listWidget_Chats->currentRow(); //Индекс выбранного чата в списке
+    if(ui->lineEdit_Search->text().trimmed() == "")
+    {
+        //Получаем список всех chatId из chats
+        QList<int> chatIds = chats.keys();
+        if(currentChatIndex >= 0 && currentChatIndex < chatIds.size())
+        {
+            // Получение chatId по индексу
+            currentChatId = chatIds[currentChatIndex];
+            currentChatName = chats[currentChatId];
+            ui->label_CurrentChatName->setText(currentChatName);
+        }
+        chatType(currentChatId);
+        getChatStory(currentChatId);
+    }
+    else
+    {
+
     }
 }
 

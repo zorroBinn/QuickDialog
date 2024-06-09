@@ -377,6 +377,44 @@ void Server::addUsersToChats(QStringList users, int chatId)
     GetChats();
 }
 
+//Отправка истории чата пользователю
+void Server::getChatStory(int chatId)
+{
+    QSqlQuery query;
+    QStringList messages;
+    //Получаем все сообщения из базы данных для данного чата
+    query.prepare("SELECT * FROM Messages WHERE Id_Chat = :chatId ORDER BY Send_Time");
+    query.bindValue(":chatId", chatId);
+    query.exec();
+    while (query.next()) {
+        QString messageText = query.value("Message_Text").toString();
+        int senderId = query.value("Id_Sender").toInt();
+        QDateTime sendTime = query.value("Send_Time").toDateTime();
+        //Получаем имя отправителя
+        QSqlQuery userquery;
+        userquery.prepare("SELECT Username FROM Users WHERE Id_User = :id");
+        userquery.bindValue(":id", senderId);
+        userquery.exec();
+        if(userquery.next()) {
+            QString senderName = userquery.value("Username").toString();
+            //Формируем сообщение
+            QString message = QString("[%1] %2:  %3")
+                                  .arg(sendTime.toString("yyyy-MM-dd hh:mm:ss"))
+                                  .arg(senderName)
+                                  .arg(messageText);
+            messages << message;
+        }
+    }
+    //Отправляем на клиент пользователю историю сообщений чата
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << SignalType::GetChatStory << messages << chatId;
+    socket->write(Data);
+
+    qDebug() << "Sending chat story (Id_Chat = "<< chatId <<") to the user (Id_User = " << Clients[socket].Id_User << ") is done";
+}
+
 void Server::slotReadyRead()
 {
     socket = (QTcpSocket*)sender();
@@ -451,7 +489,14 @@ void Server::slotReadyRead()
             int chatId;
             in >> users;
             in >> chatId;
-
+            addUsersToChats(users, chatId);
+            break;
+        }
+        case SignalType::GetChatStory:
+        {
+            int chatId;
+            in >> chatId;
+            getChatStory(chatId);
             break;
         }
         }

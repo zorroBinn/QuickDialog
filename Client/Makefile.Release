@@ -720,6 +720,24 @@ release/moc_MainWindow.cpp: MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtGui/QCloseEvent \
 		NewChat.h \
 		ClientSignalType.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/QListWidgetItem \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qlistwidget.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qlistview.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qitemselectionmodel.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qrubberband.h \
 		release/moc_predefs.h \
 		C:/Qt/6.7.1/mingw_64/bin/moc.exe
 	C:\Qt\6.7.1\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/zorro/Documents/QuickDialog/Client/release/moc_predefs.h -IC:/Qt/6.7.1/mingw_64/mkspecs/win32-g++ -IC:/Users/zorro/Documents/QuickDialog/Client -IC:/Qt/6.7.1/mingw_64/include -IC:/Qt/6.7.1/mingw_64/include/QtWidgets -IC:/Qt/6.7.1/mingw_64/include/QtGui -IC:/Qt/6.7.1/mingw_64/include/QtNetwork -IC:/Qt/6.7.1/mingw_64/include/QtCore -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include MainWindow.h -o release\moc_MainWindow.cpp
@@ -1734,6 +1752,24 @@ release/main.o: main.cpp MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtGui/QCloseEvent \
 		NewChat.h \
 		ClientSignalType.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/QListWidgetItem \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qlistwidget.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qlistview.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qitemselectionmodel.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qrubberband.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/QApplication \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o main.cpp
@@ -1944,6 +1980,24 @@ release/MainWindow.o: MainWindow.cpp MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtGui/QCloseEvent \
 		NewChat.h \
 		ClientSignalType.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/QListWidgetItem \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qlistwidget.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qlistview.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qitemselectionmodel.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qstyleoption.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qslider.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qabstractslider.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qstyle.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qtabbar.h \
+		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qrubberband.h \
 		ui_MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\MainWindow.o MainWindow.cpp

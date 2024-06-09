@@ -59,7 +59,10 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "newChatDestroyed",
     "addUserToChatDestroyed",
     "on_lineEdit_Search_textEdited",
-    "arg1"
+    "arg1",
+    "on_listWidget_Chats_itemClicked",
+    "QListWidgetItem*",
+    "item"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -72,7 +75,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,23 +83,24 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  104,    2, 0x06,    1 /* Public */,
-       3,    1,  105,    2, 0x06,    2 /* Public */,
-       5,    1,  108,    2, 0x06,    4 /* Public */,
-       6,    3,  111,    2, 0x06,    6 /* Public */,
+       1,    0,  110,    2, 0x06,    1 /* Public */,
+       3,    1,  111,    2, 0x06,    2 /* Public */,
+       5,    1,  114,    2, 0x06,    4 /* Public */,
+       6,    3,  117,    2, 0x06,    6 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      10,    0,  118,    2, 0x0a,   10 /* Public */,
-      11,    2,  119,    2, 0x0a,   11 /* Public */,
-      14,    2,  124,    2, 0x0a,   14 /* Public */,
-      15,    2,  129,    2, 0x0a,   17 /* Public */,
-      17,    0,  134,    2, 0x08,   20 /* Private */,
-      18,    0,  135,    2, 0x08,   21 /* Private */,
-      19,    0,  136,    2, 0x08,   22 /* Private */,
-      20,    0,  137,    2, 0x08,   23 /* Private */,
-      21,    0,  138,    2, 0x08,   24 /* Private */,
-      22,    0,  139,    2, 0x08,   25 /* Private */,
-      23,    1,  140,    2, 0x08,   26 /* Private */,
+      10,    0,  124,    2, 0x0a,   10 /* Public */,
+      11,    2,  125,    2, 0x0a,   11 /* Public */,
+      14,    2,  130,    2, 0x0a,   14 /* Public */,
+      15,    2,  135,    2, 0x0a,   17 /* Public */,
+      17,    0,  140,    2, 0x08,   20 /* Private */,
+      18,    0,  141,    2, 0x08,   21 /* Private */,
+      19,    0,  142,    2, 0x08,   22 /* Private */,
+      20,    0,  143,    2, 0x08,   23 /* Private */,
+      21,    0,  144,    2, 0x08,   24 /* Private */,
+      22,    0,  145,    2, 0x08,   25 /* Private */,
+      23,    1,  146,    2, 0x08,   26 /* Private */,
+      25,    1,  149,    2, 0x08,   28 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -116,6 +120,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Void, 0x80000000 | 26,   27,
 
        0        // eod
 };
@@ -170,7 +175,10 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_lineEdit_Search_textEdited'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        // method 'on_listWidget_Chats_itemClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QListWidgetItem *, std::false_type>
     >,
     nullptr
 } };
@@ -196,6 +204,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->newChatDestroyed(); break;
         case 13: _t->addUserToChatDestroyed(); break;
         case 14: _t->on_lineEdit_Search_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 15: _t->on_listWidget_Chats_itemClicked((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -250,13 +259,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 16)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 15;
+        _id -= 16;
     }
     return _id;
 }

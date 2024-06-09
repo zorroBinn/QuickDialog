@@ -15,7 +15,8 @@ enum class ClientSignalType
     ChatType,
     IsGroupChat,
     IsPrivateChat,
-    AddUsersToChat
+    AddUsersToChat,
+    GetChatStory
 };
 
 #endif // CLIENTSIGNALTYPE_H

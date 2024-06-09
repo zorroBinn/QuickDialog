@@ -7,6 +7,7 @@
 #include "AddUserToChat.h"
 #include "NewChat.h"
 #include "ClientSignalType.h"
+#include <QListWidgetItem>
 //#include <qDebug>
 
 QT_BEGIN_NAMESPACE
@@ -43,6 +44,7 @@ private:
     void showUsersInChatList(QStringList users);
     void chatType(int chatId);
     void addUsersToChat(QStringList users, int chatId);
+    void getChatStory(int chatId);
 
 public slots:
     void slotReadyRead();
@@ -58,6 +60,7 @@ private slots:
     void newChatDestroyed();
     void addUserToChatDestroyed();
     void on_lineEdit_Search_textEdited(const QString &arg1);
+    void on_listWidget_Chats_itemClicked(QListWidgetItem *item);
 
 signals:
     void AuthError(); //Сигнал ошибки аутентификации
