@@ -296,8 +296,8 @@ void Server::chatType(int chatId)
     {
         QString chatname = query.value("Chat_Name").toString();
         QString participants = query.value("Ids_Participants").toString();
-        QStringList participantsList = participants.split(' ');
-        if(chatname.isEmpty() && participantsList.size() == 2)
+        QStringList participantsIdList = participants.split(' ');
+        if(chatname.isEmpty() && participantsIdList.size() == 2)
         {
             Data.clear();
             QDataStream out(&Data, QIODevice::WriteOnly);
@@ -317,6 +317,64 @@ void Server::chatType(int chatId)
         qDebug() << "Sending chat type to the user (Id_User = " << Clients[socket].Id_User << ") is done";
     }
 
+}
+
+//Добавление в групповой чат новых пользователей (по Id чата)
+void Server::addUsersToChats(QStringList users, int chatId)
+{
+    QSqlQuery query;
+    //Получаем список Id участников чата из БД
+    query.prepare("SELECT Ids_Participants FROM Chats WHERE Chat_Id = :chatId");
+    query.bindValue(":chatname", chatId);
+    query.exec();
+    if(query.next())
+    {
+        QString participants = query.value(0).toString();
+        QStringList participantsIdList = participants.split(' ');
+        QStringList participantsList;
+        //Получаем username каждого участника
+        foreach (const QString id, participantsIdList) {
+            query.prepare("SELECT Username FROm Users WHERE Id_User = :id");
+            query.bindValue(":id", id.toInt());
+            query.exec();
+            query.next();
+            participantsList << query.value(0).toString();
+        }
+        bool isUpdate = false; //Проверяем, есть ли новые пользователи
+        foreach (const QString &user, users) {
+            if(participantsList.contains(user)) continue;
+            else
+            {
+                participantsList << user;
+                if(!isUpdate) isUpdate = true;
+            }
+        }
+        if(!isUpdate) return;
+        QList<int> userIds;
+        //Сопоставляем username и Id_User
+        foreach (const QString &member, participantsList) {
+            query.prepare("SELECT Id_User FROM Users WHERE Username = :member");
+            query.bindValue(":member", member);
+            query.exec();
+            query.next();
+            userIds.append(query.value(0).toInt());
+        }
+        std::sort(userIds.begin(), userIds.end());
+        QStringList membersIds;
+        foreach (int memberId, userIds) {
+            membersIds << QString::number(memberId);
+        }
+        QString chatmembers = membersIds.join(' '); //Строка для БД участников чата
+        //Обновляем ячейку Ids_Participants в БД
+        query.prepare("UPDATE Chats SET Ids_Participants = :chatmembers WHERE Id_Chats = :chatId");
+        query.bindValue(":chatmembers", chatmembers);
+        query.bindValue(":chatId", chatId);
+        query.exec();
+
+        qDebug() << "Chat (Id_Chat = " << chatId << ") update participants";
+    }
+
+    GetChats();
 }
 
 void Server::slotReadyRead()
@@ -385,6 +443,15 @@ void Server::slotReadyRead()
             int chatId;
             in >> chatId;
             chatType(chatId);
+            break;
+        }
+        case SignalType::AddUsersToChat:
+        {
+            QStringList users;
+            int chatId;
+            in >> users;
+            in >> chatId;
+
             break;
         }
         }

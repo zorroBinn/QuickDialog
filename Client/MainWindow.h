@@ -42,6 +42,7 @@ private:
     void getChatParticipants(int chatId);
     void showUsersInChatList(QStringList users);
     void chatType(int chatId);
+    void addUsersToChat(QStringList users, int chatId);
 
 public slots:
     void slotReadyRead();

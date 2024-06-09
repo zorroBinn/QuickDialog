@@ -35,6 +35,7 @@ private:
     void GetChats();
     void getChatParticipants(int chatId);
     void chatType(int chatId);
+    void addUsersToChats(QStringList users, int chatId);
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

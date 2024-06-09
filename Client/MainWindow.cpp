@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::allUsersForNewParticipants, addUserToChat, &AddUserToChat::getUsersList);
     connect(this, &MainWindow::chatParticipants, addUserToChat, &AddUserToChat::getParticipantsList);
 
+    currentChatId = -1;
+    currentChatName = "";
+
     ui->pushButton_Chat_NewUser->setVisible(false);
 }
 
@@ -86,7 +89,7 @@ void MainWindow::showUsersInChatList(QStringList users)
     if(searchKey != "")
     {
         ui->listWidget_Chats->clear();
-        currentChatId = 0;
+        currentChatId = -1;
         currentChatName = "";
         ui->label_CurrentChatName->setText("");
         foreach (const QString &user, users) {
@@ -97,12 +100,23 @@ void MainWindow::showUsersInChatList(QStringList users)
     }
 }
 
+//Запрос на определение типа текущего чата (личный или групповой)
 void MainWindow::chatType(int chatId)
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
     out << ClientSignalType::ChatType << chatId;
+    socket->write(Data);
+}
+
+//Запрос на добавление новых участников в групповой чат
+void MainWindow::addUsersToChat(QStringList users, int chatId)
+{
+    Data.clear();
+    QDataStream out(&Data, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_6_2);
+    out << ClientSignalType::AddUsersToChat << users << chatId;
     socket->write(Data);
 }
 
