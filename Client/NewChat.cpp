@@ -15,7 +15,7 @@ NewChat::~NewChat()
 }
 
 //Получение списка пользователей (кроме текущего)
-void NewChat::GetUsersList(QStringList users)
+void NewChat::getUsersList(QStringList users)
 {
     ui->listWidget_AllUsers->clear();
     UserCheckStates.clear();

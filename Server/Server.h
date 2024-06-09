@@ -27,16 +27,16 @@ private:
     QMap<QTcpSocket *, ClientData> Clients;
     QByteArray Data;
     QSqlDatabase ServerDatabase;
-    //void SendToClient(QString str);
-    void AuthUser(QString username, QString password);
-    void RegistrUser(QString username, QString password);
-    void GetAllUsers();
+    void authUser(QString username, QString password);
+    void registrUser(QString username, QString password);
+    void getAllUsers();
     void createNewChat(QStringList usernames, QString chatname);
-    void GetChats();
+    void getChats();
     void getChatParticipants(int chatId);
     void chatType(int chatId);
     void addUsersToChats(QStringList users, int chatId);
-    void getChatStory(int chatId);
+    void getChatStory(int chatId, QTcpSocket *socket);
+    void sendMessage(QString message, QString sender, int chatId);
 
 public slots:
     void incomingConnection(qintptr socketDescriptor);

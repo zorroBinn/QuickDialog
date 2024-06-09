@@ -17,15 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
     authform->show();
     connect(authform, &Auth::registerUser, this, &MainWindow::registerUser);
     connect(authform, &Auth::authUser, this, &MainWindow::authUser);
-    connect(this, &MainWindow::AuthError, authform, &Auth::AuthError);
+    connect(this, &MainWindow::authError, authform, &Auth::authError);
 
     newChat = new NewChat(); //Окно создания нового чата
     connect(newChat, &NewChat::thisClosed, this, &MainWindow::newChatDestroyed);
     connect(newChat, &NewChat::createNewChat, this, &MainWindow::createNewChat);
-    connect(this, &MainWindow::allUsersForNewChat, newChat, &NewChat::GetUsersList);
+    connect(this, &MainWindow::allUsersForNewChat, newChat, &NewChat::getUsersList);
 
     addUserToChat = new AddUserToChat(); //Окно добавления в групповой чат новых участников
     connect(addUserToChat, &AddUserToChat::thisClosed, this, &MainWindow::addUserToChatDestroyed);
+    connect(addUserToChat, &AddUserToChat::addUser, this, &MainWindow::addUsersToChat);
     connect(this, &MainWindow::allUsersForNewParticipants, addUserToChat, &AddUserToChat::getUsersList);
     connect(this, &MainWindow::chatParticipants, addUserToChat, &AddUserToChat::getParticipantsList);
 
@@ -43,18 +44,19 @@ MainWindow::~MainWindow()
     delete this->addUserToChat;
 }
 
-void MainWindow::SendToServer(QString str)
+//Отправка сообщения в чате
+void MainWindow::sendMessage(QString message, QString sender, int chatId)
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
-    out << ClientSignalType::UserMessage << str;
+    out << ClientSignalType::UserMessage << message << sender << chatId;
     socket->write(Data);
     ui->lineEdit_Mess->clear();
 }
 
 //Запрос на получение списка всех пользователей
-void MainWindow::GetAllUsers()
+void MainWindow::getAllUsers()
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
@@ -64,7 +66,7 @@ void MainWindow::GetAllUsers()
 }
 
 //Запрос на получение списка всех чатов, в которых участвует пользователь
-void MainWindow::GetChats()
+void MainWindow::getChats()
 {
     Data.clear();
     QDataStream out(&Data, QIODevice::WriteOnly);
@@ -91,6 +93,8 @@ void MainWindow::showUsersInChatList(QStringList users)
         ui->listWidget_Chats->clear();
         currentChatId = -1;
         currentChatName = "";
+        ui->textBrowser_CurrentChat->clear();
+        ui->lineEdit_Mess->clear();
         ui->label_CurrentChatName->setText("");
         foreach (const QString &user, users) {
             if (!user.contains(searchKey, Qt::CaseInsensitive)) continue;
@@ -146,12 +150,12 @@ void MainWindow::slotReadyRead()
             in >> Username;
             authform->close();
             this->show();
-            GetChats();
+            getChats();
             break;
         }
         case ClientSignalType::AuthError:
         {
-            emit AuthError();
+            emit authError();
             break;
         }
         case ClientSignalType::GetAllUsers:
@@ -173,8 +177,14 @@ void MainWindow::slotReadyRead()
         {
             chats.clear();
             in >> chats;
+            currentChatId = -1;
+            currentChatName = "";
             ui->listWidget_Chats->clear();
             ui->lineEdit_Search->clear();
+            ui->lineEdit_Mess->setText("");
+            ui->textBrowser_CurrentChat->clear();
+            ui->pushButton_Chat_NewUser->setVisible(false);
+            ui->label_CurrentChatName->setText("");
             searchKey = "";
             foreach (const QString &chatname, chats) {
                 ui->listWidget_Chats->addItem(new QListWidgetItem(chatname));
@@ -188,6 +198,7 @@ void MainWindow::slotReadyRead()
             if(!isThisActive)
             {
                 emit chatParticipants(participants, currentChatName, currentChatId);
+                getAllUsers();
             }
             break;
         }
@@ -213,6 +224,7 @@ void MainWindow::slotReadyRead()
                 foreach (const QString &message, chatStory) {
                     ui->textBrowser_CurrentChat->append(message);
                 }
+                chatType(currentChatId);
             }
             break;
         }
@@ -267,13 +279,13 @@ void MainWindow::addUserToChatDestroyed()
 
 void MainWindow::on_pushButton_Send_clicked()
 {
-    if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text());
+    if(ui->lineEdit_Mess->text().trimmed() != "") sendMessage(ui->lineEdit_Mess->text(), Username, currentChatId);
 }
 
 
 void MainWindow::on_lineEdit_Mess_returnPressed()
 {
-    if(ui->lineEdit_Mess->text().trimmed() != "") SendToServer(ui->lineEdit_Mess->text());
+    if(ui->lineEdit_Mess->text().trimmed() != "") sendMessage(ui->lineEdit_Mess->text(), Username, currentChatId);
 }
 
 
@@ -281,9 +293,8 @@ void MainWindow::on_pushButton_Chat_NewUser_clicked()
 {
     isThisActive = false;
     addUserToChat->show();
-    this->setDisabled(true);
     getChatParticipants(currentChatId);
-    GetAllUsers();
+    this->setDisabled(true);
 }
 
 
@@ -292,7 +303,7 @@ void MainWindow::on_pushButton_NewChat_clicked()
     isThisActive = false;
     newChat->show();
     this->setDisabled(true);
-    GetAllUsers();
+    getAllUsers();
 }
 
 
@@ -301,32 +312,33 @@ void MainWindow::on_lineEdit_Search_textEdited(const QString &arg1)
     if(ui->lineEdit_Search->text().trimmed() != "")
     {
         searchKey = arg1.trimmed();
-        GetAllUsers();
+        ui->pushButton_Chat_NewUser->setVisible(false);
+        getAllUsers();
     }
     else if(ui->lineEdit_Search->text() == "")
     {
         searchKey = "";
-        GetChats();
+        ui->pushButton_Chat_NewUser->setVisible(false);
+        getChats();
     }
 }
 
 
 void MainWindow::on_listWidget_Chats_itemClicked(QListWidgetItem *item)
 {
-    int currentChatIndex = ui->listWidget_Chats->currentRow(); //Индекс выбранного чата в списке
     if(ui->lineEdit_Search->text().trimmed() == "")
     {
+        int currentChatIndex = ui->listWidget_Chats->currentRow(); //Индекс выбранного чата в списке
         //Получаем список всех chatId из chats
         QList<int> chatIds = chats.keys();
         if(currentChatIndex >= 0 && currentChatIndex < chatIds.size())
         {
-            // Получение chatId по индексу
+            //Получение chatId по индексу
             currentChatId = chatIds[currentChatIndex];
             currentChatName = chats[currentChatId];
             ui->label_CurrentChatName->setText(currentChatName);
+            getChatStory(currentChatId);
         }
-        chatType(currentChatId);
-        getChatStory(currentChatId);
     }
     else
     {

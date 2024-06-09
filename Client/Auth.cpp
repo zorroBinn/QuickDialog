@@ -15,9 +15,9 @@ Auth::~Auth()
 }
 
 //Если сервер сообщил об ошибке аутентификации - вывод информации об ошибке в соответствии с предыдущим действием
-void Auth::AuthError()
+void Auth::authError()
 {
-    if(IsRegistration)
+    if(isRegistration)
     {
         ui->label_Error->setText("Пользователь с таким именем уже существует");
         ui->label_Error->setVisible(true);
@@ -55,7 +55,7 @@ void Auth::on_pushButton_Auth_clicked()
     {
         ui->lineEdit_Username->text() = "";
         ui->lineEdit_Password->text() = "";
-        IsRegistration = false;
+        isRegistration = false;
         emit authUser(ui->lineEdit_Username->text(), ui->lineEdit_Password->text());
     }
 }
@@ -67,7 +67,7 @@ void Auth::on_pushButton_Registr_clicked()
     {
         ui->lineEdit_Username->text() = "";
         ui->lineEdit_Password->text() = "";
-        IsRegistration = true;
+        isRegistration = true;
         emit registerUser(ui->lineEdit_Username->text(), ui->lineEdit_Password->text());
     }
 }

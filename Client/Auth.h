@@ -17,7 +17,7 @@ public:
     ~Auth();
 
 public slots:
-    void AuthError();
+    void authError();
 
 private slots:
     void on_lineEdit_Password_returnPressed();
@@ -27,7 +27,7 @@ private slots:
 
 private:
     Ui::Auth *ui;
-    bool IsRegistration;
+    bool isRegistration;
 
 signals:
     void registerUser(const QString &username, const QString &password); //Сигнал для регистрации

@@ -37,9 +37,9 @@ private:
     QString currentChatName;
     QString searchKey;
     bool isThisActive = true;
-    void SendToServer(QString str);
-    void GetAllUsers();
-    void GetChats();
+    void sendMessage(QString message, QString sender, int chatId);
+    void getAllUsers();
+    void getChats();
     void getChatParticipants(int chatId);
     void showUsersInChatList(QStringList users);
     void chatType(int chatId);
@@ -63,7 +63,7 @@ private slots:
     void on_listWidget_Chats_itemClicked(QListWidgetItem *item);
 
 signals:
-    void AuthError(); //Сигнал ошибки аутентификации
+    void authError(); //Сигнал ошибки аутентификации
     void allUsersForNewChat(QStringList users); //Сигнал для отправки списка пользователей в окно создания нового чата
     void allUsersForNewParticipants(QStringList users); //Сигнал для отправки списка пользователей в окно добавления пользователей в групповые чаты
     void chatParticipants(QStringList partisipants, QString currentchatname, int chatId); //Сигнал для отпрвки списка участников чата в окно добавления пользователей в групповые чаты

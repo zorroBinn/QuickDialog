@@ -41,7 +41,7 @@ constexpr auto qt_meta_stringdata_CLASSAuthENDCLASS = QtMocHelpers::stringData(
     "username",
     "password",
     "authUser",
-    "AuthError",
+    "authError",
     "on_lineEdit_Password_returnPressed",
     "on_lineEdit_Username_returnPressed",
     "on_pushButton_Auth_clicked",
@@ -107,7 +107,7 @@ Q_CONSTINIT const QMetaObject Auth::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
-        // method 'AuthError'
+        // method 'authError'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_lineEdit_Password_returnPressed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -129,7 +129,7 @@ void Auth::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         switch (_id) {
         case 0: _t->registerUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 1: _t->authUser((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
-        case 2: _t->AuthError(); break;
+        case 2: _t->authError(); break;
         case 3: _t->on_lineEdit_Password_returnPressed(); break;
         case 4: _t->on_lineEdit_Username_returnPressed(); break;
         case 5: _t->on_pushButton_Auth_clicked(); break;

@@ -36,7 +36,7 @@ namespace {
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::stringData(
     "MainWindow",
-    "AuthError",
+    "authError",
     "",
     "allUsersForNewChat",
     "users",
@@ -134,7 +134,7 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSMainWindowENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
-        // method 'AuthError'
+        // method 'authError'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'allUsersForNewChat'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -189,7 +189,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->AuthError(); break;
+        case 0: _t->authError(); break;
         case 1: _t->allUsersForNewChat((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1]))); break;
         case 2: _t->allUsersForNewParticipants((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1]))); break;
         case 3: _t->chatParticipants((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[3]))); break;
@@ -211,7 +211,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (MainWindow::*)();
-            if (_t _q_method = &MainWindow::AuthError; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &MainWindow::authError; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
@@ -271,7 +271,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void MainWindow::AuthError()
+void MainWindow::authError()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }

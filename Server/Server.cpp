@@ -67,7 +67,7 @@ void Server::incomingConnection(qintptr socketDescriptor)
 }
 
 //Обработка аутентификации пользователя
-void Server::AuthUser(QString username, QString password)
+void Server::authUser(QString username, QString password)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM Users WHERE Username = :username AND User_Password = :password"); //Поиск пользователя с указанным username и password
@@ -105,7 +105,7 @@ void Server::AuthUser(QString username, QString password)
 }
 
 //Обработка регистрации пользователя
-void Server::RegistrUser(QString username, QString password)
+void Server::registrUser(QString username, QString password)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM Users WHERE Username = :username"); //Проверка на существование пользователя с указанным username
@@ -128,12 +128,13 @@ void Server::RegistrUser(QString username, QString password)
     query.bindValue(":username", username);
     query.bindValue(":password", password);
     query.exec();
-    AuthUser(username, password); //После добавления пользователя - аутентифицируем его
+    authUser(username, password); //После добавления пользователя - аутентифицируем его
+
     qDebug() << "Registration " << username << " done";
 }
 
 //Отправка списка пользователей клиенту
-void Server::GetAllUsers()
+void Server::getAllUsers()
 {
     QSqlQuery query;
     int current_id = Clients[socket].Id_User; //Id пользователя от которого поступил запрос
@@ -189,11 +190,11 @@ void Server::createNewChat(QStringList usernames, QString chatname)
 
     qDebug() << "Chat (Id_Chat = " << query.lastInsertId().toInt() << ") created";
 
-    GetChats();
+    getChats();
 }
 
 //Отправка списка чатов клиенту
-void Server::GetChats()
+void Server::getChats()
 {
     int current_id = Clients[socket].Id_User; //Id пользователя от которого поступил запрос
     QMap<uint, QString> chatsmap;
@@ -201,7 +202,7 @@ void Server::GetChats()
     query.exec("SELECT * FROM Chats"); //Получаем список всех чатов
     while(query.next())
     {
-        uint idchat = query.value("Id_chats").toUInt();
+        int idchat = query.value("Id_chats").toUInt();
         QString chatname = query.value("Chat_Name").toString();
         QString participants = query.value("Ids_Participants").toString();
         QStringList participantsList = participants.split(' ');
@@ -215,24 +216,27 @@ void Server::GetChats()
         }
         if(!current_id_isHere) continue; //Если в текущем чате нет Id пользователя от которого поступил запрос - переход к следующему
         //Если чат личный - называем его
-        if(chatname.isEmpty() && participantsList.size() == 2)
+        if(chatname == "" && participantsList.size() == 2)
         {
 
             QString secondusername;
+            QSqlQuery privatequery;
             //Если текущий пользователь первый - находим username второго
             if(current_id == participantsList[1].toInt())
             {
-                query.prepare("SELECT Username FROM Users WHERE Id_User == :secondParticipantId");
-                query.bindValue(":secondParticipantId", participantsList.first());
-                query.exec();
+                privatequery.prepare("SELECT Username FROM Users WHERE Id_User = :secondParticipantId");
+                privatequery.bindValue(":secondParticipantId", participantsList.first());
+                privatequery.exec();
+                privatequery.next();
                 secondusername = query.value(0).toString();
             }
             //Если текущий пользоватлеь второй - находим username первого
             else if(current_id == participantsList.first().toInt())
             {
-                query.prepare("SELECT Username FROM Users WHERE Id_User == :secondParticipantId");
-                query.bindValue(":secondParticipantId", participantsList.first());
-                query.exec();
+                privatequery.prepare("SELECT Username FROM Users WHERE Id_User = :secondParticipantId");
+                privatequery.bindValue(":secondParticipantId", participantsList[1]);
+                privatequery.exec();
+                privatequery.next();
                 secondusername =  query.value(0).toString();
             }
             chatsmap[idchat] = secondusername;
@@ -257,8 +261,8 @@ void Server::getChatParticipants(int chatId)
 {
     QSqlQuery query;
     //Получаем список Id участников чата из БД
-    query.prepare("SELECT Ids_Participants FROM Chats WHERE Chat_Id = :chatId");
-    query.bindValue(":chatname", chatId);
+    query.prepare("SELECT Ids_Participants FROM Chats WHERE Id_Chats = :chatId");
+    query.bindValue(":chatId", chatId);
     query.exec();
     if(query.next())
     {
@@ -267,7 +271,7 @@ void Server::getChatParticipants(int chatId)
         QStringList participantsList;
         //Получаем username каждого участника
         foreach (const QString id, participantsIdList) {
-            query.prepare("SELECT Username FROm Users WHERE Id_User = :id");
+            query.prepare("SELECT Username FROM Users WHERE Id_User = :id");
             query.bindValue(":id", id.toInt());
             query.exec();
             query.next();
@@ -297,7 +301,7 @@ void Server::chatType(int chatId)
         QString chatname = query.value("Chat_Name").toString();
         QString participants = query.value("Ids_Participants").toString();
         QStringList participantsIdList = participants.split(' ');
-        if(chatname.isEmpty() && participantsIdList.size() == 2)
+        if(chatname == "" && participantsIdList.size() == 2)
         {
             Data.clear();
             QDataStream out(&Data, QIODevice::WriteOnly);
@@ -324,8 +328,8 @@ void Server::addUsersToChats(QStringList users, int chatId)
 {
     QSqlQuery query;
     //Получаем список Id участников чата из БД
-    query.prepare("SELECT Ids_Participants FROM Chats WHERE Chat_Id = :chatId");
-    query.bindValue(":chatname", chatId);
+    query.prepare("SELECT Ids_Participants FROM Chats WHERE Id_Chats = :chatId");
+    query.bindValue(":chatId", chatId);
     query.exec();
     if(query.next())
     {
@@ -334,7 +338,7 @@ void Server::addUsersToChats(QStringList users, int chatId)
         QStringList participantsList;
         //Получаем username каждого участника
         foreach (const QString id, participantsIdList) {
-            query.prepare("SELECT Username FROm Users WHERE Id_User = :id");
+            query.prepare("SELECT Username FROM Users WHERE Id_User = :id");
             query.bindValue(":id", id.toInt());
             query.exec();
             query.next();
@@ -374,11 +378,11 @@ void Server::addUsersToChats(QStringList users, int chatId)
         qDebug() << "Chat (Id_Chat = " << chatId << ") update participants";
     }
 
-    GetChats();
+    getChats();
 }
 
 //Отправка истории чата пользователю
-void Server::getChatStory(int chatId)
+void Server::getChatStory(int chatId, QTcpSocket *socket)
 {
     QSqlQuery query;
     QStringList messages;
@@ -415,6 +419,40 @@ void Server::getChatStory(int chatId)
     qDebug() << "Sending chat story (Id_Chat = "<< chatId <<") to the user (Id_User = " << Clients[socket].Id_User << ") is done";
 }
 
+//Добавление в БД нового сообщения и рассылка всем участникам чата обновления
+void Server::sendMessage(QString message, QString sender, int chatId)
+{
+    QSqlQuery query;
+    //Получаем Id отправителя
+    query.prepare("SELECT Id_User FROM Users WHERE Username = :sender");
+    query.bindValue(":sender", sender);
+    query.exec();
+    if(query.next())
+    {
+        int senderId = query.value(0).toInt();
+        //Добавляем сообщение в БД
+        query.prepare("INSERT INTO Messages (Id_Sender, Id_Chat, Message_Text) VALUES (:sender, :chatId, :message)");
+        query.bindValue(":sender", senderId);
+        query.bindValue(":chatId", chatId);
+        query.bindValue(":message", message);
+        query.exec();
+        //Получаем всех участников чата
+        query.prepare("SELECT Ids_Participants FROM Chats WHERE Id_Chats = :chatId");
+        query.bindValue(":chatId", chatId);
+        query.exec();
+        if(query.next())
+        {
+            QString participants = query.value(0).toString();
+            QStringList participantList = participants.split(' ');
+            //Рассылка истории сообщений каждому участнику чата
+            foreach (QTcpSocket *socket, Clients.keys()) {
+                ClientData clientdata = Clients[socket];
+                if(participantList.contains(QString::number(clientdata.Id_User))) getChatStory(chatId, socket);
+            }
+        }
+    }
+}
+
 void Server::slotReadyRead()
 {
     socket = (QTcpSocket*)sender();
@@ -428,10 +466,12 @@ void Server::slotReadyRead()
         {
         case SignalType::UserMessage:
         {
-            QString str;
-            in >> str;
-            qDebug() << "User " << socketDescriptor() << " sent the message " << str;
-
+            QString message, sender;
+            int chatId;
+            in >> message;
+            in >> sender;
+            in >> chatId;
+            sendMessage(message, sender,chatId);
             break;
         }
         case SignalType::Authentication:
@@ -439,7 +479,7 @@ void Server::slotReadyRead()
             QString username, password;
             in >> username;
             in >> password;
-            AuthUser(username, password);
+            authUser(username, password);
             break;
         }
         case SignalType::Registration:
@@ -447,12 +487,12 @@ void Server::slotReadyRead()
             QString username, password;
             in >> username;
             in >> password;
-            RegistrUser(username, password);
+            registrUser(username, password);
             break;
         }
         case SignalType::GetAllUsers:
         {
-            GetAllUsers();
+            getAllUsers();
             break;
         }
         case SignalType::CreateNewChat:
@@ -466,7 +506,7 @@ void Server::slotReadyRead()
         }
         case SignalType::GetChats:
         {
-            GetChats();
+            getChats();
             break;
         }
         case SignalType::GetChatParticipants:
@@ -496,11 +536,10 @@ void Server::slotReadyRead()
         {
             int chatId;
             in >> chatId;
-            getChatStory(chatId);
+            getChatStory(chatId, socket);
             break;
         }
         }
-
     }
     else
     {

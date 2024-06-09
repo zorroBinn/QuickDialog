@@ -203,7 +203,7 @@ border: 2px solid rgb(0, 255, 255);</string>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(0, 0, 60);
 color: rgb(239, 253, 255);
-font: 700 18pt &quot;Comic Sans MS&quot;;
+font: 700 14pt &quot;Comic Sans MS&quot;;
 border: 0px</string>
            </property>
           </widget>

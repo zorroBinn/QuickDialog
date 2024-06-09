@@ -41,7 +41,7 @@ constexpr auto qt_meta_stringdata_CLASSNewChatENDCLASS = QtMocHelpers::stringDat
     "users",
     "chatname",
     "thisClosed",
-    "GetUsersList",
+    "getUsersList",
     "on_pushButton_CreateChat_clicked",
     "on_lineEdit_Search_textChanged",
     "arg1",
@@ -105,7 +105,7 @@ Q_CONSTINIT const QMetaObject NewChat::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<const QString, std::false_type>,
         // method 'thisClosed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'GetUsersList'
+        // method 'getUsersList'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QStringList, std::false_type>,
         // method 'on_pushButton_CreateChat_clicked'
@@ -128,7 +128,7 @@ void NewChat::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         switch (_id) {
         case 0: _t->createNewChat((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 1: _t->thisClosed(); break;
-        case 2: _t->GetUsersList((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1]))); break;
+        case 2: _t->getUsersList((*reinterpret_cast< std::add_pointer_t<QStringList>>(_a[1]))); break;
         case 3: _t->on_pushButton_CreateChat_clicked(); break;
         case 4: _t->on_lineEdit_Search_textChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 5: _t->closeEvent((*reinterpret_cast< std::add_pointer_t<QCloseEvent*>>(_a[1]))); break;

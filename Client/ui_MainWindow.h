@@ -147,7 +147,7 @@ public:
         textBrowser_CurrentChat->setFocusPolicy(Qt::NoFocus);
         textBrowser_CurrentChat->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 60);\n"
 "color: rgb(239, 253, 255);\n"
-"font: 700 18pt \"Comic Sans MS\";\n"
+"font: 700 14pt \"Comic Sans MS\";\n"
 "border: 0px"));
 
         gridLayout->addWidget(textBrowser_CurrentChat, 1, 0, 1, 3);

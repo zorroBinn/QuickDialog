@@ -39,14 +39,18 @@ void AddUserToChat::getParticipantsList(QStringList participants, QString chatna
     ui->listWidget_Participants->clear();
     foreach (const QString &user, this->participants) {
         QListWidgetItem *newitem = new QListWidgetItem(user);
-        newitem->setFlags(newitem->flags() | Qt::ItemIsUserCheckable);
-        newitem->setCheckState(Qt::Unchecked);
         ui->listWidget_Participants->addItem(newitem);
     }
 }
 
 void AddUserToChat::on_pushButton_AddUsers_clicked()
 {
+    //Сохранение текущих состояний флажков
+    ui->lineEdit_Search->setText("");
+    for(int i = 0; i < ui->listWidget_AddUser->count(); i++) {
+        QListWidgetItem *item = ui->listWidget_AddUser->item(i);
+        newChatUsersCheckStates[item->text()] = item->checkState();
+    }
     bool isSelected = false; //Для проверки наличия хотя бы 1 выбранного нового участника
     foreach(Qt::CheckState state, newChatUsersCheckStates) {
         if(state == Qt::Checked)
@@ -93,6 +97,7 @@ void AddUserToChat::on_lineEdit_Search_textChanged(const QString &arg1)
     }
 }
 
+//Очистка формы при закрытии
 void AddUserToChat::closeEvent(QCloseEvent *event)
 {
     participants.clear();

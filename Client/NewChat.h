@@ -17,7 +17,7 @@ public:
     ~NewChat();
 
 public slots:
-    void GetUsersList(QStringList users);
+    void getUsersList(QStringList users);
 
 private slots:
     void on_pushButton_CreateChat_clicked();
