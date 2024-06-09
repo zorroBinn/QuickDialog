@@ -342,7 +342,29 @@ void MainWindow::on_listWidget_Chats_itemClicked(QListWidgetItem *item)
     }
     else
     {
-
+        bool chatAlreadyExists = false;
+        QString selectedUser = item->text();
+        for(auto it = chats.begin(); it != chats.end(); ++it)
+        {
+            if(it.value() == selectedUser)
+            {
+                currentChatId = it.key();
+                currentChatName = selectedUser;
+                chatAlreadyExists = true;
+                break;
+            }
+        }
+        if(!chatAlreadyExists)
+        {
+            QStringList username;
+            username << selectedUser;
+            createNewChat(username, "");
+        }
+        else
+        {
+            ui->label_CurrentChatName->setText(currentChatName);
+            getChatStory(currentChatId);
+        }
     }
 }
 

@@ -228,7 +228,7 @@ void Server::getChats()
                 privatequery.bindValue(":secondParticipantId", participantsList.first());
                 privatequery.exec();
                 privatequery.next();
-                secondusername = query.value(0).toString();
+                secondusername = privatequery.value(0).toString();
             }
             //Если текущий пользоватлеь второй - находим username первого
             else if(current_id == participantsList.first().toInt())
@@ -237,7 +237,7 @@ void Server::getChats()
                 privatequery.bindValue(":secondParticipantId", participantsList[1]);
                 privatequery.exec();
                 privatequery.next();
-                secondusername =  query.value(0).toString();
+                secondusername = privatequery.value(0).toString();
             }
             chatsmap[idchat] = secondusername;
         }
