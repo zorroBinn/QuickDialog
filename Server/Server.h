@@ -31,7 +31,7 @@ private:
     void registrUser(QString username, QString password);
     void getAllUsers();
     void createNewChat(QStringList usernames, QString chatname);
-    void getChats();
+    void getChats(QTcpSocket *socket);
     void getChatParticipants(int chatId);
     void chatType(int chatId);
     void addUsersToChats(QStringList users, int chatId);

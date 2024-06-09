@@ -56,7 +56,12 @@ void Auth::on_pushButton_Auth_clicked()
         ui->lineEdit_Username->text() = "";
         ui->lineEdit_Password->text() = "";
         isRegistration = false;
-        emit authUser(ui->lineEdit_Username->text(), ui->lineEdit_Password->text());
+        //Хэширование пароля
+        QString simplepassword = ui->lineEdit_Password->text();
+        QString salt = "QuickDialog"; //Соль для хэша
+        QByteArray hash = QCryptographicHash::hash((salt + simplepassword).toUtf8(), QCryptographicHash::Sha256);
+        QString hashedPassword = hash.toHex();
+        emit authUser(ui->lineEdit_Username->text(), hashedPassword);
     }
 }
 
@@ -68,7 +73,12 @@ void Auth::on_pushButton_Registr_clicked()
         ui->lineEdit_Username->text() = "";
         ui->lineEdit_Password->text() = "";
         isRegistration = true;
-        emit registerUser(ui->lineEdit_Username->text(), ui->lineEdit_Password->text());
+        //Хэширование пароля
+        QString simplepassword = ui->lineEdit_Password->text();
+        QString salt = "QuickDialog"; //Соль для хэша
+        QByteArray hash = QCryptographicHash::hash((salt + simplepassword).toUtf8(), QCryptographicHash::Sha256);
+        QString hashedPassword = hash.toHex();
+        emit registerUser(ui->lineEdit_Username->text(), hashedPassword);
     }
 }
 

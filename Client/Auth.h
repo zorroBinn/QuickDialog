@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMessageBox>
+#include <QCryptographicHash>
 
 namespace Ui {
 class Auth;

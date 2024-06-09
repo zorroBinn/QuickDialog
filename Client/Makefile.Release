@@ -510,6 +510,8 @@ release/moc_Auth.cpp: Auth.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/QCryptographicHash \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qcryptographichash.h \
 		release/moc_predefs.h \
 		C:/Qt/6.7.1/mingw_64/bin/moc.exe
 	C:\Qt\6.7.1\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/zorro/Documents/QuickDialog/Client/release/moc_predefs.h -IC:/Qt/6.7.1/mingw_64/mkspecs/win32-g++ -IC:/Users/zorro/Documents/QuickDialog/Client -IC:/Qt/6.7.1/mingw_64/include -IC:/Qt/6.7.1/mingw_64/include/QtWidgets -IC:/Qt/6.7.1/mingw_64/include/QtGui -IC:/Qt/6.7.1/mingw_64/include/QtNetwork -IC:/Qt/6.7.1/mingw_64/include/QtCore -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include Auth.h -o release\moc_Auth.cpp
@@ -716,6 +718,8 @@ release/moc_MainWindow.cpp: MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/QCryptographicHash \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qcryptographichash.h \
 		AddUserToChat.h \
 		C:/Qt/6.7.1/mingw_64/include/QtGui/QCloseEvent \
 		NewChat.h \
@@ -1351,6 +1355,8 @@ release/Auth.o: Auth.cpp Auth.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/QCryptographicHash \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qcryptographichash.h \
 		ui_Auth.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Auth.o Auth.cpp
 
@@ -1748,6 +1754,8 @@ release/main.o: main.cpp MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/QCryptographicHash \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qcryptographichash.h \
 		AddUserToChat.h \
 		C:/Qt/6.7.1/mingw_64/include/QtGui/QCloseEvent \
 		NewChat.h \
@@ -1976,6 +1984,8 @@ release/MainWindow.o: MainWindow.cpp MainWindow.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.7.1/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/QCryptographicHash \
+		C:/Qt/6.7.1/mingw_64/include/QtCore/qcryptographichash.h \
 		AddUserToChat.h \
 		C:/Qt/6.7.1/mingw_64/include/QtGui/QCloseEvent \
 		NewChat.h \
