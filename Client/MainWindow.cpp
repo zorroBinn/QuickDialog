@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include <QDebug>
 
 //Конструктор основной формы
 MainWindow::MainWindow(QWidget *parent)
@@ -11,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::slotReadyRead);
     connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
-    socket->connectToHost("192.168.1.103", 2024);
+    socket->connectToHost("192.168.1.102", 2024); //IP сервера и порт
 
     authform = new Auth(); //Окно авторизации
     authform->show();
@@ -148,6 +147,8 @@ void MainWindow::slotReadyRead()
         case ClientSignalType::AuthDone:
         {
             in >> Username;
+            QString windowName = "QuickDialog ( " + Username + " )";
+            setWindowTitle(windowName);
             authform->close();
             this->show();
             getChats();

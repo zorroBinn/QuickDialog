@@ -8,7 +8,6 @@
 #include "NewChat.h"
 #include "ClientSignalType.h"
 #include <QListWidgetItem>
-//#include <qDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

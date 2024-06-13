@@ -19,7 +19,6 @@ public:
     QTcpSocket* socket;
 
 private:
-    //QVector <QTcpSocket*> Sockets;
     struct ClientData
     {
         int Id_User;
